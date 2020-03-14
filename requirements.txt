@@ -1,0 +1,8 @@
+Django
+django-oauth-toolkit
+cryptography
+pyjwt
+python-jose
+python-dotenv
+django-cors-headers
+django-cors-middleware
