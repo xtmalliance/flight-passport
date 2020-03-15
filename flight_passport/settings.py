@@ -62,14 +62,13 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'flight_passport.urls'
-print(BASE_DIR)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': (
-            os.path.join(PROJECT_ROOT,'templates','allauth'),
-            os.path.join(PROJECT_ROOT,'templates','allauth', 'account'),
-            os.path.join(PROJECT_ROOT,'templates'),
+            os.path.join(BASE_DIR,'allauth', 'templates','allauth'),
+            
             ),
         'APP_DIRS': True,
         'OPTIONS': {
