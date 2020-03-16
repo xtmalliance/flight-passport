@@ -6,9 +6,10 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-<div class="column col-6">
+<div class="column col-4 col-mx-auto">
+<br>
 <h1>{% trans "Sign In" %}</h1>
-
+<br>
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
