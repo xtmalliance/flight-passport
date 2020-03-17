@@ -114,5 +114,4 @@ class TokenView(views.TokenView):
                         "error_description": "App not configured correctly. "
                                              "Please set JWT_ID_ATTRIBUTE.",
                     })
-        print(response.content)
         return response

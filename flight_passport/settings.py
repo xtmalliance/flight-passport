@@ -162,7 +162,6 @@ STATIC_URL = '/static/'
 OAUTH2_PROVIDER = {
     'SCOPES': {
         'registry.read.operator': 'Read Operator data',
-       
     },
 
 }

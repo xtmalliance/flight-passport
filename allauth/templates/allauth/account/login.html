@@ -8,7 +8,9 @@
 {% block content %}
 <div class="column col-4 col-mx-auto">
 <br>
-<h1>{% trans "Sign In" %}</h1>
+
+<div class="divider text-center" data-content="Sign In"></div>
+<!-- <h4>{% trans "Sign in" %}</h4> -->
 <br>
 {% get_providers as socialaccount_providers %}
 
@@ -30,18 +32,20 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 {% include "socialaccount/snippets/login_extra.html" %}
 
 {% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+<!-- <p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p> -->
 {% endif %}
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
+<form class="login form-group" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
   {{ form.as_p }}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
+  <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+  <br><br><br>
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+
 </form>
 </div> <!-- div end-->
 {% endblock %}
