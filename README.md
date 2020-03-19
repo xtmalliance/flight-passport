@@ -2,6 +2,18 @@
 
 ## Flight Passport OAuth Server
 
+A open source OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Regs
+
+## Why? 
+
+The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT / OAuth 2.0 based tokens to exchange credentials and permissions. There are many open and closed sourced solutions avaiable for this. However, based on my work / research there are a few limitations of the current offerings:
+- National Entities may or may not be interested in using "Big Cloud" companies for authentication. since this is a national function, they would prefer to host the platform locally.
+- OAuth / OpenID / Open ID Connect is a “general purpose” authenication and identity standard and the solutions available price it differently. Some charge by number of users, some charge by number of tokens / clients etc. All of this is not really suitable for UTM / U-Space operations. 
+- There are very specific OAuth related things that some services do not support. E.g. Azure does not support “scope” in Client Credentials grant, but is required per the Remote ID standard. 
+- One open source side (https://oauth.net/code/) a number of them are not ready or have very complex instllation procedures. 
+
+### Background 
+
 While there are many authentication and identity providers that support OAuth 2.0 and OpenID / OpenID Connect Credentials, all of them have some limitations in the context of U-Space / UTM. As of February 2020, OAuth 2.0 and Javascript Web Token (JWTs) as a way to authenticate and issue credentials are parts of upcoming UTM / U-Space standards (e.g. DSS). Commercial service providers may or may not suffice for all cases, therefore this project is developed to enable maximum flexiblity and still issue secure JWT tokens. This project can be deployed on any cloud service provider (national or international) and can be customized in any way to suit local needs. 
 
 ## Technical Details   
