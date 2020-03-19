@@ -2,7 +2,7 @@
 
 ## Flight Passport OAuth Server
 
-A open source OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Regs
+A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Regsitry etc. compatible with current U-Space standards.
 
 ## Why? 
 
