@@ -7,8 +7,8 @@ A OAuth proivder focused on UTM / U-Space that can be self hosted and used to is
 ## Why? 
 
 The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT / OAuth 2.0 based tokens to exchange credentials and permissions. There are many open and closed sourced solutions avaiable for this. However, based on my work / research there are a few limitations of the current offerings:
-- National Entities may or may not be interested in using "Big Cloud" companies for authentication. since this is a national function, they would prefer to host the platform locally.
-- OAuth / OpenID / Open ID Connect is a “general purpose” authenication and identity standard and the solutions available price it differently. Some charge by number of users, some charge by number of tokens / clients etc. All of this is not really suitable for UTM / U-Space operations. 
+- National Entities may or may not be interested in using private commercial companies for authentication and identity. since this is a national function, they would prefer to host the platform locally.
+- OAuth / OpenID / Open ID Connect stack are a “general purpose” authenication and identity standard and the solutions available price it very differently. Some charge by number of users, some charge by number of tokens / clients etc. All of this is not really suitable for UTM / U-Space operations. 
 - There are very specific OAuth related things that some services do not support. E.g. Azure does not support “scope” in Client Credentials grant, but is required per the Remote ID standard. 
 - On the [open source side](https://oauth.net/code/), a number of them are not totally ready or have very complex installation procedures. 
 
