@@ -2,7 +2,8 @@
 
 ## Flight Passport OAuth Server
 
-A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight))etc. compatible with current and upcoming U-Space / UTM standards.
+A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software UTM software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight)) etc. 
+
 
 ## Why? 
 
