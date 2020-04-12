@@ -18,8 +18,12 @@ PROJECT_ROOT = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4v28x1(krsi5j7^!$o#k+fy5*o%4q3+8nq-5d^uyz-(c!vfe9o'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,17 +51,17 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 SITE_ID = 1
-MIDDLEWARE = [
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'oauth2_provider.middleware.OAuth2TokenMiddleware',
-]
+)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -123,16 +127,12 @@ AUTH_PASSWORD_VALIDATORS = [
 #     'oauth2_provider.backends.OAuth2Backend',
 # )
 AUTHENTICATION_BACKENDS = (
+    'oauth2_provider.backends.OAuth2Backend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
-    'oauth2_provider.backends.OAuth2Backend',
 )
-ENV_FILE = find_dotenv()
-if ENV_FILE:
-    load_dotenv(ENV_FILE)
-
 JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'cygnus2936'
@@ -154,6 +154,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# SCOPES_BACKEND_CLASS = 'authprofiles.scopes'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -161,8 +162,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
-    'SCOPES': {
-        'registry.read.operator': 'Read Operator data',
-    },
-
+    'APPLICATION_MODEL': 'authprofiles.PassportApplication',
+    'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
+    
 }
+
