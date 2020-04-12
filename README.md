@@ -2,7 +2,7 @@
 
 ## Flight Passport OAuth Server
 
-A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Regsitry etc. compatible with current U-Space standards.
+A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight))etc. compatible with current and upcoming U-Space / UTM standards.
 
 ## Why? 
 
@@ -27,13 +27,17 @@ This is a Django project that uses Django and other opensource libraries.
 
 Python 3 is required for this and install dependencies using `pip install -r requirements.txt`.
 
-### 2. For Local testing turn off Securing API endpoints
-
-Go to `settings.py` and set `SECURE_API_ENDPOINTS` as `False` to disable secure endpoints for local testing. This means that you dont need the JWT tokens for Identity and Authenication, for more information about Identity and Roles are managed, please review [Identitiy and Authentication paper](https://github.com/openskies-sh/aircraftregistry/blob/master/documents/registration-identity-authentication.md) 
-
 ### 2. Create Initial Database
 
 Use `python manage.py migrate` to create the initial database tables locally. It will use the default SQLLite.
+
+### 3. Create a Django administrator
+
+Use `python manage.py createsuperuser` to create a administrator.
+
+### 3. Login to Administration interface and create a client
+
+Go to `http://localhost:8000/admin` and login to the Django Admin interface and create a new client. 
 
 #### Image credit
 
