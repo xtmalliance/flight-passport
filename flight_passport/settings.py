@@ -51,13 +51,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 ]
 SITE_ID = 1
+
+
 MIDDLEWARE = (
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -127,15 +129,16 @@ AUTH_PASSWORD_VALIDATORS = [
 #     'oauth2_provider.backends.OAuth2Backend',
 # )
 AUTHENTICATION_BACKENDS = (
-    'oauth2_provider.backends.OAuth2Backend',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
+    'oauth2_provider.backends.OAuth2Backend',
 )
+
 JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
-JWT_ID_ATTRIBUTE = 'cygnus2936'
+JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
 JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
 
@@ -164,6 +167,6 @@ STATIC_URL = '/static/'
 OAUTH2_PROVIDER = {
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
-    
+    'REQUEST_APPROVAL_PROMPT':"auto"
 }
 

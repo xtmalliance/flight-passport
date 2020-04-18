@@ -16,6 +16,10 @@ from oauth2_provider.models import get_access_token_model
 
 from .utils import generate_payload, encode_jwt
 
+
+# Create your views here.
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -49,6 +53,7 @@ class JWTAuthorizationView(views.AuthorizationView):
 
 
 class TokenView(views.TokenView):
+
     def _get_access_token_jwt(self, request, content):
         extra_data = {}
         issuer_shortname = settings.JWT_ISSUER
@@ -68,11 +73,16 @@ class TokenView(views.TokenView):
             token = get_access_token_model().objects.get(
                 token=content['access_token']
             )
-            id_value = getattr(token.user, id_attribute, 'cygnus2936')
+
+            token_user = token.user
+            ## check the allowed scopes for user and content scopes 
+
+
+            id_value = getattr(token_user, id_attribute, None)
             if not id_value:
                 raise MissingIdAttribute()
  
-            extra_data[id_attribute] = str(id_value)
+            extra_data['sub'] = str(id_value)
 
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
         
@@ -107,6 +117,8 @@ class TokenView(views.TokenView):
                     except TypeError:
                         content = bytes(json.dumps(content).encode("utf-8"))
                     response.content = content
+                    
+                    
                 except MissingIdAttribute:
                     response.status_code = 400
                     response.content = json.dumps({
@@ -115,3 +127,6 @@ class TokenView(views.TokenView):
                                              "Please set JWT_ID_ATTRIBUTE.",
                     })
         return response
+
+from django.shortcuts import render
+
