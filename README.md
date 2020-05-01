@@ -1,5 +1,8 @@
 <img src="https://i.imgur.com/EZPrEEX.png" height="300">
 
+
+**April 2020: This software is under heavy development and really ready for production use yet**
+
 ## Flight Passport OAuth Server
 
 A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software UTM software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight)) etc. 
