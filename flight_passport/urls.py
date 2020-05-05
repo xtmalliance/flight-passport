@@ -20,7 +20,7 @@ from vault import views as vault_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path("oauth/user_info/",vault_views.get_user, {}, 'current_user'),
+    path("oauth/userinfo/",vault_views.get_user, {}, 'current_user'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/", include('allauth.urls')),
 ]

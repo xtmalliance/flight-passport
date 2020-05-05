@@ -73,17 +73,20 @@ class TokenView(views.TokenView):
             token = get_access_token_model().objects.get(
                 token=content['access_token']
             )
-
+            
             token_user = token.user
             ## check the allowed scopes for user and content scopes 
+            try: 
+                assert token_user is not None
+                id_value = getattr(token_user, id_attribute, None)
+                if not id_value:
+                    raise MissingIdAttribute()
+            except AssertionError as ae: 
+                id_value = token.application.client_id
 
+            
 
-            id_value = getattr(token_user, id_attribute, None)
-            if not id_value:
-                raise MissingIdAttribute()
- 
             extra_data['sub'] = str(id_value)
-
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
         
         token = encode_jwt(payload)

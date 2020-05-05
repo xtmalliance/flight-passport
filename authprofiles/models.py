@@ -15,6 +15,6 @@ class UserProfile(models.Model):
     
     
 class PassportApplication(AbstractApplication):
-    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('DSS Reader')),(2, _('Registry Reader')),)
+    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('Remote ID Display Provider')),(2, _('Registry Reader')),)
     client_class = models.IntegerField(choices=APPLICATION_CLASS_CHOICES,default=0)
     
