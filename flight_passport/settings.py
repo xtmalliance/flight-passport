@@ -30,7 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'flight_passport.wsgi.application'
 
-
 SOCIALACCOUNT_AUTO_SIGNUP = False 
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD  = "email"
@@ -105,7 +103,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'flight_passport.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -125,9 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = (
-#     'oauth2_provider.backends.OAuth2Backend',
-# )
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
