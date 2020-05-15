@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+
+
+<div class="columns">
+    <!-- LEFT COLUMN -->
+    <div class="column col-4 col-sm-12 float-right bg-dark text-light titlecol" style="padding-top: 20%; padding-left: 2em; padding-right: 2em;";>
+        <div class="divider" style="padding-top: 1em;"></div>
+        <h1 class="">id.openskies.sh</h1> 
+        
+    </div><!-- .column .col-4 .col-sm-12 -->
+
+    <!-- RIGHT COLUMN-CLIENT AREA -->
+    <div class="column col-8 col-sm-12 float-left"  style="padding-top: 20%; padding-left: 2em;">	
+        <img class="logo" src="https://openskies.sh/images/logo.svg">	
+        <h4>&nbsp;</h4>
+        <h4>Identity and Authentication for UTM / U-Space ecosystem</h4>
+        <p>This is a production instance of <a href="https://github.com/openskies-sh/flight_passport/">Flight Passport</a>. This server is used to authenticate and issue credentials in the form of JWT tokens for different U-Space / UTM services.</p>
+        <h4>What can I do with a Token?</h4>
+        <p>Using a JWT token issued by this server, you can connect to a DSS instance, use it for applications like <a href="https://github.com/openskies-sh/flight-spotlight/"></a>Flight Spotlight</a> and across many other applications and serivice prodivers (e.g. query registration data).</p>
+            <h5 class="title">Contributing</h5>
+            <p>Want to contribute? You can open <a href="https://github.com/openskies-sh/flight_passport/issues">issues on this repository</a>, review the README document, make comments at open issues to look at the current work in progress. 
+            <div class="divider"></div>
+            <p>&copy; 2020 Openskies Aerial Technology Ltd. Licensed under the <a target="_blank" href="https://github.com/openskies-sh/aircraftregistry/blob/master/LICENSE" title="Apache 2.0 Licence">Apache 2.0 License</a>.</p>
+    </div><!-- .column .col-8 .col-sm-12 -->
+
+
+</div><!-- .columns -->
+
+{% endblock %}

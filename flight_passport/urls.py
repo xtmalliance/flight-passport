@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from vault import views as vault_views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +25,5 @@ urlpatterns = [
     path("oauth/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/", include('allauth.urls')),
+    path('', TemplateView.as_view(template_name="passport_homepage.html")),
 ]
