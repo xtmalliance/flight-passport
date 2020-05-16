@@ -6,3 +6,4 @@ python-jose
 python-dotenv
 django-cors-headers
 django-cors-middleware
+django-heroku
