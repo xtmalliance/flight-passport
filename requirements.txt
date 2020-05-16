@@ -8,3 +8,4 @@ django-cors-headers
 django-cors-middleware
 django-heroku
 django-allauth
+gunicorn
