@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 from dotenv import load_dotenv, find_dotenv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -134,8 +135,8 @@ AUTHENTICATION_BACKENDS = (
 JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
-JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
-JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
+JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY").replace(/\\n/g, '\n')
+JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY").replace(/\\n/g, '\n')
 
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
@@ -165,3 +166,4 @@ OAUTH2_PROVIDER = {
     'REQUEST_APPROVAL_PROMPT':"auto"
 }
 
+django_heroku.settings(locals())

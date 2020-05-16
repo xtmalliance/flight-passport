@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from vault import views as vault_views
 from django.views.generic import TemplateView
+from django.conf.urls import (handler400, handler403, handler404, handler500)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,3 +28,7 @@ urlpatterns = [
     path("accounts/", include('allauth.urls')),
     path('', TemplateView.as_view(template_name="passport_homepage.html")),
 ]
+
+
+handler404 = vault_views.NotFoundView.as_view()
+handler500 = vault_views.ErrorView.get_rendered_view()
