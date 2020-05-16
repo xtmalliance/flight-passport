@@ -135,8 +135,8 @@ AUTHENTICATION_BACKENDS = (
 JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
-JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY").replace(/\\n/g, '\n')
-JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY").replace(/\\n/g, '\n')
+JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
+JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
 
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
