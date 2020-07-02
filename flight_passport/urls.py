@@ -21,7 +21,7 @@ from django.conf.urls import (handler400, handler403, handler404, handler500)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("o/", Includingude('oauth2_provider.urls', namespace='oauth2_provider')),
+    # path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
     path(".well-known/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/", include('allauth.urls')),

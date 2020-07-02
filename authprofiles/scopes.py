@@ -48,8 +48,8 @@ class PassportScopes(BaseScopes):
         "registry.read.aircraft":"Read Aircraft data",
         "registry.read.aircraft_detail":"Read Aircraft Detail data",
         "registry.read.aircraft_detail.privileged":"Read Privileged Aircraft data", 
-        "dss.read.identification_service_areas":"DSS Read ISA",
-        "dss.write.identification_service_areas":"DSS Write ISA"
+        "dss.read.identification_service_areas":"DSS Read Identification service areas",
+        "dss.write.identification_service_areas":"DSS Write Identification service areas"
     }
         
     def get_all_scopes(self):

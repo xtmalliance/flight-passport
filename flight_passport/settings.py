@@ -95,6 +95,7 @@ SOCIALACCOUNT_AUTO_SIGNUP = False
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
