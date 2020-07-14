@@ -4,19 +4,61 @@
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
-{% block content %}
-<div class="column col-4 col-mx-auto">
-<h1>{% trans "Sign Up" %}</h1>
+{% block content %}<div class="column col-4 col-mx-auto">
+  <br>
+  <div class="flex-centered">
+  <img class="logo" src="https://openskies.sh/images/logo.svg">
+  </div>
+  <div class="flex-centered">
+  <p class="application-name">Openskies.sh - Trust Bridge</p>
+  </div>
+  <div class="divider text-center" data-content="Sign Up"></div>
+  
+  <!-- <h4>{% trans "Sign in" %}</h4> -->
+  <br>
+  
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+<form class="signup form-group" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  {{ form.as_p }}
+  
+  {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="text-error">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="text-warning">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+
+  {% for hidden_field in form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+  
+  <table class="table">
+    {% for field in form.visible_fields %}      
+          <label class="form-label">{{ field.label_tag }}</label>
+          {{ field.errors }}
+          {{ field }}
+          {{ field.help_text }}
+    {% endfor %}
+  </table>
+  <br>
+
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>
+
+
 </div>
 {% endblock %}

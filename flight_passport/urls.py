@@ -29,6 +29,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="passport_homepage.html")),
 ]
 
-
 handler404 = vault_views.NotFoundView.as_view()
 handler500 = vault_views.ErrorView.get_rendered_view()

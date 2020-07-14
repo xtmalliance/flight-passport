@@ -92,11 +92,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'flight_passport.wsgi.application'
 
 SOCIALACCOUNT_AUTO_SIGNUP = False 
-ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
-
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_FORMS = {'signup': 'authprofiles.forms.PassportSignUpForm', 'login':'authprofiles.forms.PassportLoginForm',  'reset_password': 'authprofiles.forms.ResetPasswordForm',}
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
