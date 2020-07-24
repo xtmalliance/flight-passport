@@ -59,10 +59,11 @@ class TokenView(views.TokenView):
         issuer_shortname = settings.JWT_ISSUER
         issuer = settings.JWT_ISSUER_DOMAIN
         payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)
+
         if payload_enricher:
             fn = import_string(payload_enricher)
             extra_data = fn(request)
-
+            
         if 'scope' in content:
             extra_data['scope'] = content['scope']
             extra_data['typ'] = "Bearer"
@@ -82,11 +83,10 @@ class TokenView(views.TokenView):
                 if not id_value:
                     raise MissingIdAttribute()
             except AssertionError as ae: 
-                id_value = token.application.client_id
-
+                id_value = token.application.client_id + "@clients"
             
-
             extra_data['sub'] = str(id_value)
+
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
         
         token = encode_jwt(payload)
@@ -107,6 +107,7 @@ class TokenView(views.TokenView):
     def post(self, request, *args, **kwargs):
         response = super(TokenView, self).post(request, *args, **kwargs)
         content = ast.literal_eval(response.content.decode("utf-8"))
+
         if response.status_code == 200 and 'access_token' in content:
             if not TokenView._is_jwt_config_set():
                 logger.warning(

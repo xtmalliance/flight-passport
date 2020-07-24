@@ -107,7 +107,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'flight_passport.sqlite3'),
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -139,7 +138,6 @@ JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
 JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
-
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
 # Internationalization
@@ -165,7 +163,9 @@ STATIC_URL = '/static/'
 OAUTH2_PROVIDER = {
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
-    'REQUEST_APPROVAL_PROMPT':"auto"
+    'REQUEST_APPROVAL_PROMPT':"auto",
+    "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
+    "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600
 }
 
 django_heroku.settings(locals())
