@@ -27,6 +27,10 @@ class MissingIdAttribute(Exception):
     pass
 
 
+class IncorrectAudience(Exception):
+    pass
+
+
 class JWTAuthorizationView(views.AuthorizationView):
 
     def get(self, request, *args, **kwargs):
@@ -59,7 +63,8 @@ class TokenView(views.TokenView):
         issuer_shortname = settings.JWT_ISSUER
         issuer = settings.JWT_ISSUER_DOMAIN
         payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)
-
+        request_params = list(request.POST.keys())
+        
         if payload_enricher:
             fn = import_string(payload_enricher)
             extra_data = fn(request)
@@ -68,8 +73,25 @@ class TokenView(views.TokenView):
             extra_data['scope'] = content['scope']
             extra_data['typ'] = "Bearer"
             extra_data['issuer_shortname'] = issuer_shortname
+        
+        if 'audience' in request_params: 
+            requested_audience = request.POST['audience']    
+            token = get_access_token_model().objects.get(
+                token=content['access_token']
+            )            
+            audience_query = token.application.audience.all().only('identifier')
+            all_audience = [audience.identifier for audience in audience_query]
+            
+            try: 
+                assert requested_audience in all_audience
+            except AssertionError as ae:
+                raise IncorrectAudience()
+            else:                
+                extra_data['aud'] = requested_audience
+                
 
         id_attribute = getattr(settings, 'JWT_ID_ATTRIBUTE', None)
+        
         if id_attribute:
             token = get_access_token_model().objects.get(
                 token=content['access_token']
@@ -86,6 +108,7 @@ class TokenView(views.TokenView):
                 id_value = token.application.client_id + "@clients"
             
             extra_data['sub'] = str(id_value)
+        
 
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
         
@@ -129,6 +152,15 @@ class TokenView(views.TokenView):
                         "error": "invalid_request",
                         "error_description": "App not configured correctly. "
                                              "Please set JWT_ID_ATTRIBUTE.",
+                    })
+                    
+                    
+                except IncorrectAudience:
+                    response.status_code = 400
+                    response.content = json.dumps({
+                        "error": "invalid_request",
+                        "error_description": "Incorrect Audience. "
+                                             "Please set the appropriate audience in the request.",
                     })
         return response
 

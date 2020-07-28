@@ -49,7 +49,9 @@ class PassportScopes(BaseScopes):
         "registry.read.aircraft_detail":"Read Aircraft Detail data",
         "registry.read.aircraft_detail.privileged":"Read Privileged Aircraft data", 
         "dss.read.identification_service_areas":"DSS Read Identification service areas",
-        "dss.write.identification_service_areas":"DSS Write Identification service areas"
+        "dss.write.identification_service_areas":"DSS Write Identification service areas",
+        "spotlight.write.air_traffic":"Spotlight Write Air traffic Data",
+        "spotlight.read.air_traffic":"Spotlight Read Air traffic Data"
     }
         
     def get_all_scopes(self):
@@ -59,6 +61,13 @@ class PassportScopes(BaseScopes):
 
         if (application.client_class == 1):
             return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('dss.read.')]
+            
+        elif (application.client_class == 4):
+            return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('spotlight.read.')]
+
+        elif (application.client_class == 5):
+            return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('spotlight.')]
+
         else:
             return []
 
