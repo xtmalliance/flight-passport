@@ -63,7 +63,7 @@ def get_user(request):
 
 	u = get_user_model()
 	user = u.objects.get(email = email)
-
+	
 
 	return HttpResponse(
 		json.dumps({
