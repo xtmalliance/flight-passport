@@ -1,14 +1,10 @@
 <img src="https://i.imgur.com/EZPrEEX.png" height="300">
 
-
-**April 2020: This software is under heavy development and really ready for production use yet**
-
 ## Flight Passport OAuth Server
 
 A OAuth proivder focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software UTM software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight)) etc. 
 
-
-## Why? 
+## Why?
 
 The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT / OAuth 2.0 based tokens to exchange credentials and permissions. There are many open and closed sourced solutions avaiable for this. However, based on my work / research there are a few limitations of the current offerings:
 
@@ -18,16 +14,16 @@ The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT /
 - There are very specific OAuth related things that some services do not support. E.g. Azure does not support “scope” in Client Credentials grant, but is required per the Remote ID standard.
 - On the [open source side](https://oauth.net/code/), a number of them are not totally ready or have very complex installation procedures or user management etc. that are not really necessary for the authorization use-case.
 
-### Background 
+### Background
 
-While there are many authentication and identity providers that support OAuth 2.0 and OpenID / OpenID Connect Credentials, all of them have some limitations in the context of U-Space / UTM. As of February 2020, OAuth 2.0 and Javascript Web Token (JWTs) as a way to authenticate and issue credentials are parts of upcoming UTM / U-Space standards (e.g. DSS). Commercial service providers may or may not suffice for all cases, therefore this project is developed to enable maximum flexiblity and still issue secure JWT tokens. This project can be deployed on any cloud service provider (national or international) and can be customized in any way to suit local needs. 
+While there are many authentication and identity providers that support OAuth 2.0 and OpenID / OpenID Connect Credentials, all of them have some limitations in the context of U-Space / UTM. As of February 2020, OAuth 2.0 and Javascript Web Token (JWTs) as a way to authenticate and issue credentials are parts of upcoming UTM / U-Space standards (e.g. DSS). Commercial service providers may or may not suffice for all cases, therefore this project is developed to enable maximum flexiblity and still issue secure JWT tokens. This project can be deployed on any cloud service provider (national or international) and can be customized in any way to suit local needs.
 
-## Technical Details   
-Flight Passport is a OAuth Provider that runs on Django and the fantastic [Authlib](https://authlib.org/) library and [Django OAuth Toolkit](https://github.com/jazzband/django-oauth-toolkit). 
+## Technical Details
+Flight Passport is a OAuth Provider that runs on Django and the fantastic [Authlib](https://authlib.org/) library and [Django OAuth Toolkit](https://github.com/jazzband/django-oauth-toolkit).
 
 
 ## Self-install
-This is a Django project that uses Django and other opensource libraries. 
+This is a Django project that uses Django and other opensource libraries.
 
 ### 1. Install Dependencies
 
@@ -41,9 +37,25 @@ Use `python manage.py migrate` to create the initial database tables locally. It
 
 Use `python manage.py createsuperuser` to create a administrator.
 
-### 3. Login to Administration interface and create a client
+### 4. Start Server
 
-Go to `http://localhost:8000/admin` and login to the Django Admin interface and create a new client. 
+Run  `python manage.py runserver`
+
+### 5. Login to Administration interface and create a client
+
+Go to `http://localhost:8000/admin` and login to the Django Admin interface and create a new client.
+
+### 6. Create a .env file
+
+Rename the `.env.example` to `.env` and fill in approrpriately. You might have to create new key. Follow instructions [here](https://www.howtoforge.com/linux-basics-how-to-install-ssh-keys-on-the-shell) for example.
+
+### 7. Make a Client Credentials request
+
+Use a API client such as Postman or Insomnia to run a `client_credentials` request.
+
+### 8. Authorization Code request
+
+Once a Application has been created, you can run the  [Sample Client](https://github.com/openskies-sh/flight_passport_sample_client) to run the Authorization Code grant.
 
 #### Image credit
 
