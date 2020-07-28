@@ -26,7 +26,7 @@ urlpatterns = [
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/", include('allauth.urls')),
     path("userinfo/", vault_views.get_user, {}, 'current_user'),
-    path('', TemplateView.as_view(template_name="passport_homepage.html")),
+    path('', vault_views.HomePage.as_view(), name='home'),
 ]
 
 handler404 = vault_views.NotFoundView.as_view()
