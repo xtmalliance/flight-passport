@@ -2,6 +2,7 @@
 from django.conf import settings
 
 class BaseScopes(object):
+    
     def get_all_scopes(self):
         """
         Return a dict-like object with all the scopes available in the
