@@ -59,4 +59,4 @@ Once a Application has been created, you can run the  [Sample Client](https://gi
 
 #### Image credit
 
-[source](https://www.vecteezy.com/free-vector/open)
+[Passport Vectors by Vecteezy](https://www.vecteezy.com/free-vector/passport)
