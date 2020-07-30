@@ -15,11 +15,25 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=30, blank=True)
 
 
+class PassportScope(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    name = models.CharField(max_length=140)
+    description = models.CharField(max_length=140)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.__str__()
+    def __uniode__(self):
+        return self.__str__()
+
     
 class PassportAPI(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     identifier = models.CharField(max_length=140)
     name = models.CharField(max_length=140)
+    scopes = models.ManyToManyField(PassportScope, related_name = 'api_scope', blank = True)
 
     def __str__(self):
         return self.name
@@ -30,9 +44,8 @@ class PassportAPI(models.Model):
         return self.__str__()
 
 
-
 class PassportApplication(AbstractApplication):
-    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('Remote ID Display Provider')),(2, _('Registry Reader')),(3, _('Login only')),(4, _('Flight Spotlight Reader')),(5, _('Flight Spotlight Read + Write')),)
+    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('Remote ID Display Provider')),(2, _('Registry Reader')),(3, _('Login only')),(4, _('Flight Spotlight Reader')),(5, _('Flight Spotlight Service')),(6, _('Remote ID Service Provider')),))
     client_class = models.IntegerField(choices=APPLICATION_CLASS_CHOICES,default=0)
     audience = models.ManyToManyField(PassportAPI, related_name = 'application_audience', blank=True)    
     

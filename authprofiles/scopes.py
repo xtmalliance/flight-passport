@@ -36,41 +36,18 @@ class BaseScopes(object):
 
 
 class PassportScopes(BaseScopes):
-    def __init__(self):
-        
-        self.ALL_SCOPES = {
-        "registry.read.operator":"Read Operator data",
-        "registry.read.operator_detail":"Read Operator detail data",
-        "registry.read.operator_detail.privileged":"Read Operator detail data privileged",
-        "registry.read.contact_detail":"Read Contact details",
-        "registry.read.contact_detail.privileged":"Read Contact details privileged",
-        "registry.read.pilot":"Read Pilot data",
-        "registry.read.pilot_detail":"Read Pilot Detail data",
-        "registry.read.aircraft":"Read Aircraft data",
-        "registry.read.aircraft_detail":"Read Aircraft Detail data",
-        "registry.read.aircraft_detail.privileged":"Read Privileged Aircraft data", 
-        "dss.read.identification_service_areas":"DSS Read Identification service areas",
-        "dss.write.identification_service_areas":"DSS Write Identification service areas",
-        "spotlight.write.air_traffic":"Spotlight Write Air traffic Data",
-        "spotlight.read.air_traffic":"Spotlight Read Air traffic Data"
-    }
-        
-    def get_all_scopes(self):
-        return self.ALL_SCOPES
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
+        all_audiences = application.audience.all()
+        available_scopes = []
+        for api in all_audiences: 
+            all_api_scopes = api.scopes.all()
+            for cur_scope in all_api_scopes:
+                available_scopes.append(cur_scope.name)
 
-        if (application.client_class == 1):
-            return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('dss.read.')]
-            
-        elif (application.client_class == 4):
-            return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('spotlight.read.')]
+        # based on client class filter read / write scopes 
 
-        elif (application.client_class == 5):
-            return [ k for k,v in self.ALL_SCOPES.items() if k.startswith('spotlight.')]
-
-        else:
-            return []
+        return available_scopes
 
     def get_default_scopes(self, application=None, request=None, *args, **kwargs):
         return []
