@@ -46,6 +46,8 @@ class PassportScopes(BaseScopes):
                 available_scopes.append(cur_scope.name)
 
         # based on client class filter read / write scopes 
+        
+        
 
         return available_scopes
 

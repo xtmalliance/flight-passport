@@ -17,7 +17,7 @@ class PassportAccountAdapter(DefaultAccountAdapter):
         DOMAIN_WHITELIST = env.get(constants.DOMAIN_WHITELIST)
         domain = email.split("@")[1]
         white_listed_domain = [i for i in DOMAIN_WHITELIST.split(";")] 
-        
+
         if domain in white_listed_domain:              
             ext = tldextract.extract(domain)            
             tld = ext.domain.upper()

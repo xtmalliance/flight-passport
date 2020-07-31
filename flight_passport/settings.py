@@ -94,7 +94,10 @@ WSGI_APPLICATION = 'flight_passport.wsgi.application'
 SOCIALACCOUNT_AUTO_SIGNUP = False 
 ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
+ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
+
+LOGO_URL = 'https://openskies.sh/images/logo.svg'
+
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 if DEBUG:

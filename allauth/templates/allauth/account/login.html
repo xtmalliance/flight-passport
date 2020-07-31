@@ -6,17 +6,7 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-<div class="column col-4 col-mx-auto">
-<br>
-<div class="flex-centered">
-<img class="logo" src="https://openskies.sh/images/logo.svg">
-</div>
-<div class="flex-centered">
-<p class="application-name">Openskies.sh - Trust Bridge</p>
-</div>
-<div class="divider text-center" data-content="Sign In"></div>
 
-<!-- <h4>{% trans "Sign in" %}</h4> -->
 <br>
 {% get_providers as socialaccount_providers %}
 
@@ -37,8 +27,8 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 {% include "socialaccount/snippets/login_extra.html" %}
 
 {% else %}
-<!-- <p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p> -->
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
 {% endif %}
 
 <form class="login form-group" method="POST" action="{% url 'account_login' %}">
@@ -84,5 +74,5 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
 
 </form>
-</div> <!-- div end-->
+
 {% endblock %}

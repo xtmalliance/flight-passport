@@ -5,19 +5,7 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<div class="column col-4 col-mx-auto">
-  <br>
-  <div class="flex-centered">
-  <img class="logo" src="https://openskies.sh/images/logo.svg">
-  </div>
-  <div class="flex-centered">
-  <p class="application-name">Openskies.sh - Trust Bridge</p>
-  </div>
-  <div class="divider text-center" data-content="Sign Up"></div>
-  
-  <!-- <h4>{% trans "Sign in" %}</h4> -->
-  <br>
-  
+
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
@@ -61,5 +49,4 @@
 </form>
 
 
-</div>
 {% endblock %}

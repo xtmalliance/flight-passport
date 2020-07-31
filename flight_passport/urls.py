@@ -17,17 +17,20 @@ from django.contrib import admin
 from django.urls import include, path
 from vault import views as vault_views
 from django.views.generic import TemplateView
+import django.views.defaults as default_views
+
 from django.conf.urls import (handler400, handler403, handler404, handler500)
+
+handler404 = vault_views.NotFoundView.as_view()
+handler500 = vault_views.ErrorView.get_rendered_view()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
     path(".well-known/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
+    path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),
     path("accounts/", include('allauth.urls')),
     path("userinfo/", vault_views.get_user, {}, 'current_user'),
     path('', vault_views.HomePage.as_view(), name='home'),
 ]
-
-handler404 = vault_views.NotFoundView.as_view()
-handler500 = vault_views.ErrorView.get_rendered_view()

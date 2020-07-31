@@ -7,19 +7,7 @@
 
 
 {% block content %}
-<div class="column col-4 col-mx-auto">
-    <br>
-    <div class="flex-centered">
-    <img class="logo" src="https://openskies.sh/images/logo.svg">
-    </div>
-    <div class="flex-centered">
-    <p class="application-name">Openskies.sh - Trust Bridge</p>
-    </div>
-    <div class="divider text-center" data-content="Confirm E-mail Address"></div>
-    
-    <!-- <h4>{% trans "Sign in" %}</h4> -->
-    <br>
-    
+
 <!-- <h1>{% trans "Confirm E-mail Address" %}</h1> -->
 
 {% if confirmation %}
@@ -40,6 +28,6 @@
 <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
 
 {% endif %}
-</div>
+
 
 {% endblock %}

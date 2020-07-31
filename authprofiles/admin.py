@@ -6,3 +6,4 @@ class PassportAPIAdmin(admin.ModelAdmin):
     list_display = ('identifier', 'name')
     
 admin.site.register(PassportAPI, PassportAPIAdmin)
+admin.site.register(PassportScope)
