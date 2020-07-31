@@ -1,4 +1,4 @@
-from allauth.account.forms import SignupForm, LoginForm,ResetPasswordForm
+from allauth.account.forms import SignupForm, LoginForm, ResetPasswordForm
 
 class PassportSignUpForm(SignupForm):
 
@@ -10,8 +10,6 @@ class PassportSignUpForm(SignupForm):
                 field.widget.attrs.update({
                     'class': 'form-input'
                 })            
-
-
 
 class PassportLoginForm(LoginForm):
 
