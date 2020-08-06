@@ -9,3 +9,4 @@ django-cors-middleware
 django-heroku
 django-allauth
 gunicorn
+tldextract
