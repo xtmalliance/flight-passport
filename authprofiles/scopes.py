@@ -38,13 +38,6 @@ class BaseScopes(object):
 class PassportScopes(BaseScopes):
     
     def get_all_scopes(self):
-        """
-        Return a dict-like object with all the scopes available in the
-        system. The key should be the scope name and the value should be
-        the description.
-
-        ex: {"read": "A read scope", "write": "A write scope"}
-        """
         return []
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
