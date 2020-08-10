@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+      <link rel="stylesheet" href="{% static "authprofiles/css/spectre/spectre.min.css" %}">
+      <link rel="stylesheet" href="{% static "authprofiles/css/spectre/spectre-exp.min.css" %}">
+      <link rel="stylesheet" href="{% static "authprofiles/css/spectre/spectre-icons.min.css" %}">
+      <link rel="stylesheet" href="{% static "authprofiles/css/custom.css" %}">
+    {% endblock %}
+  </head>
+  <body>
+    
+    {% block body %}
+        
+  
+        {% block content %}
+          {% endblock %}
+        
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>
