@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 
 class PassportScope(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    name = models.CharField(max_length=140)
+    name = models.CharField(max_length=140, help_text='e.g. dss.read.identification_service_areas')
     description = models.CharField(max_length=140)
 
     def __str__(self):
@@ -31,7 +31,7 @@ class PassportScope(models.Model):
     
 class PassportAPI(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    identifier = models.CharField(max_length=140)
+    identifier = models.CharField(max_length=140, help_text='e.g. che.openskies.sh')
     name = models.CharField(max_length=140)
     scopes = models.ManyToManyField(PassportScope, related_name = 'api_scope', blank = True)
 
