@@ -5,15 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from oauth2_provider.models import AbstractApplication
 import uuid
 
-class UserProfile(models.Model):
-    """ User Profile """
-    user = models.OneToOneField(User,
-                                on_delete= models.CASCADE,
-                                unique=True,
-                                verbose_name=_('user'),
-                                related_name='profile') 
-    location = models.CharField(max_length=30, blank=True)
-
 
 class PassportScope(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
