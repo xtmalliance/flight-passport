@@ -111,7 +111,7 @@ class TokenView(views.TokenView):
         
 
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
-        
+        headers = {'kid': settings.JWKS_KEY_ID}
         token = encode_jwt(payload)
         
         return token

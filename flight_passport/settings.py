@@ -151,6 +151,7 @@ JWT_ISSUER_DOMAIN = 'id.openskies.sh'
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
 JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
+JWKS_KEY_ID=os.environ.get("JWKS_KEY_ID")
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
 # Internationalization
