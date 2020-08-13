@@ -75,6 +75,6 @@ def get_user(request):
 class GetJWKS(View):
 
     def get(self, request, *args, **kwargs):
-        jwks = json.loads(os.environ.get('JWKS_KEY'))
-        return JsonResponse(jwks)
+        jwks = [json.loads(os.environ.get('JWKS_KEY'))]
+        return JsonResponse(jwks, safe=False)
 
