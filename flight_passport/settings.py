@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
+import json
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -151,7 +151,7 @@ JWT_ISSUER_DOMAIN = 'id.openskies.sh'
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
 JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
-JWKS_KEY_ID=os.environ.get("JWKS_KEY_ID")
+JWKS_KEY_ID= json.loads(os.environ.get("JWKS_KEY")).kid
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
 # Internationalization
