@@ -19,13 +19,22 @@ from vault import views as vault_views
 from django.views.generic import TemplateView
 import django.views.defaults as default_views
 
+from dotenv import load_dotenv, find_dotenv
+import os
+from django.conf import settings as settings
+
 from django.conf.urls import (handler400, handler403, handler404, handler500)
 
 handler404 = vault_views.NotFoundView.as_view()
 handler500 = vault_views.ErrorView.get_rendered_view()
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns  = []
+if settings.SHOW_ADMIN: 
+    urlpatterns += [path('admin/', admin.site.urls)]
+
+
+urlpatterns += [
+    
     # path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
     path(".well-known/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),

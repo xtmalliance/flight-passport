@@ -154,6 +154,8 @@ JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
 JWKS_KEY_ID= json.loads(os.environ.get("JWKS_KEY"))['kid']
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
+SHOW_ADMIN = int(os.environ.get('SHOW_ADMIN'))
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
