@@ -96,7 +96,7 @@ ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
 
-LOGO_URL = 'https://openskies.sh/images/logo.svg'
+LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
