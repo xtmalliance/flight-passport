@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -100,14 +100,14 @@ LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_HOST = 'smtp.sendgrid.net'
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = 'apikey'
-    EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+# if DEBUG:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
 
 ACCOUNT_FORMS = {'signup': 'authprofiles.forms.PassportSignUpForm', 'login':'authprofiles.forms.PassportLoginForm',  'reset_password': 'authprofiles.forms.ResetPasswordForm',}
 
