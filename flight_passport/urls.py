@@ -25,7 +25,8 @@ from django.conf import settings as settings
 
 from django.conf.urls import (handler400, handler403, handler404, handler500)
 
-handler404 = vault_views.NotFoundView.as_view()
+# handler404 = vault_views.NotFoundView.as_view()
+# handler500 = vault_views.ErrorView.get_rendered_view()
 
 urlpatterns  = []
 if settings.SHOW_ADMIN: 
