@@ -4,7 +4,7 @@ from django.conf import settings as settings
 
 
 class Command(BaseCommand):
-    # args = '<user_name>'
+    
     help = 'Initiailizes database and site in Django'
 
     def handle(self, *args, **options):
