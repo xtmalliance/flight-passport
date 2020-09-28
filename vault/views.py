@@ -33,7 +33,7 @@ class ErrorView(TemplateView):
 
         def view_fn(request):
             response = as_view_fn(request)
-            # this is what was missing before
+			
             response.render()
             return response
 

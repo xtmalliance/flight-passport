@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand, CommandError
-# from plcnxdb.db.models import BOMConfig, PolicyConfig #,analysisProductPlans,storageProductPlans
 from django.contrib.sites.models import Site
 from django.conf import settings as settings
 
