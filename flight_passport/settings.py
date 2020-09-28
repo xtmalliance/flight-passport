@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'authprofiles',
     'rolepermissions',
     'allauth',
+    'vault',
     'allauth.account',
     'allauth.socialaccount',
 ]
@@ -100,6 +101,7 @@ LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
