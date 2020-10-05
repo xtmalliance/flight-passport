@@ -85,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'vault.context_processors.from_settings'
             ],
         },
     },
@@ -98,6 +99,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
 DEFAULT_FROM_EMAIL = 'Openskies Flight Passport Support <noreply@openskies.sh>'
 LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
+APPLICATION_NAME = 'Openskies.sh - Trust Bridge'
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'

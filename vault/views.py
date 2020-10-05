@@ -14,11 +14,6 @@ from django.conf import settings
 class HomePage(TemplateView):
 	template_name = 'passport_homepage.html'
 
-	def get_context_data(self, **kwargs):
-		domain_name = settings.JWT_ISSUER_DOMAIN
-		return {'domain_name': domain_name}
-
-
 
 class NotFoundView(TemplateView):
     template_name = "404.html"
