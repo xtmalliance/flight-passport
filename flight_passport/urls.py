@@ -42,7 +42,6 @@ urlpatterns += [
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),
     
-    path('', include('allauth_2fa.urls')),
     path("accounts/", include('allauth.urls')),
     path("userinfo/", vault_views.get_user, {}, 'current_user'),
     path('', vault_views.HomePage.as_view(), name='home'),
