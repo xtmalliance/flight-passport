@@ -93,9 +93,7 @@ class TokenView(views.TokenView):
         id_attribute = getattr(settings, 'JWT_ID_ATTRIBUTE', None)
         
         if id_attribute:
-            token = get_access_token_model().objects.get(
-                token=content['access_token']
-            )
+            token = get_access_token_model().objects.get(token=content['access_token'])
             
             token_user = token.user
             ## check the allowed scopes for user and content scopes 
@@ -128,13 +126,14 @@ class TokenView(views.TokenView):
             return False
 
     def post(self, request, *args, **kwargs):
+        
         response = super(TokenView, self).post(request, *args, **kwargs)
+        print(response)
         content = ast.literal_eval(response.content.decode("utf-8"))
 
         if response.status_code == 200 and 'access_token' in content:
             if not TokenView._is_jwt_config_set():
-                logger.warning(
-                    'Missing JWT configuration, skipping token build')
+                logger.warning('Missing JWT configuration, skipping token build')
             else:
                 try:
                     content['access_token'] = self._get_access_token_jwt(
