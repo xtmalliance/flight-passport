@@ -37,7 +37,7 @@ if settings.SHOW_ADMIN:
 
 urlpatterns += [
     
-    # path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
     path(".well-known/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
     path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),
