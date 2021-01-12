@@ -1,6 +1,6 @@
+idna==2.10
 Django
 python-dotenv
-
 cryptography
 pyjwt
 python-jose
