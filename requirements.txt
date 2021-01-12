@@ -10,3 +10,4 @@ django-heroku
 django-allauth
 gunicorn
 tldextract
+requests
