@@ -57,7 +57,6 @@ class JWTAuthorizationView(views.AuthorizationView):
 
 
 class TokenView(views.TokenView):
-
     def _get_access_token_jwt(self, request, content):
         extra_data = {}
         issuer_shortname = settings.JWT_ISSUER
