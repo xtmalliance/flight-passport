@@ -49,7 +49,8 @@ def encode_jwt(payload, headers=None):
             private_key_name))
     encoded = jwt.encode(payload, private_key, algorithm=algorithm,
                          headers=headers)
-    return encoded.decode("utf-8")
+    # return encoded.decode("utf-8")
+    return encoded
 
 
 def decode_jwt(jwt_value):
