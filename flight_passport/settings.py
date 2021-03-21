@@ -182,6 +182,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
+    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
     'REQUEST_APPROVAL_PROMPT':"auto",
