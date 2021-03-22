@@ -61,12 +61,8 @@ class TokenView(views.TokenView):
         extra_data = {}
         issuer_shortname = settings.JWT_ISSUER
         issuer = settings.JWT_ISSUER_DOMAIN
-        payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)        
-        
-        try: 
-            request_body = json.loads(request.body)
-        except Exception as pe: 
-            request_body = {}
+        payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)
+        request_params = list(request.POST.keys())     
         
         if payload_enricher:
             fn = import_string(payload_enricher)
@@ -76,11 +72,9 @@ class TokenView(views.TokenView):
             extra_data['scope'] = content['scope']
             extra_data['typ'] = "Bearer"
             extra_data['issuer_shortname'] = issuer_shortname
-        
-        if ('audience' in request_body): 
             
-            requested_audience = request_body['audience']    
-            
+        if 'audience' in request_params: 
+            requested_audience = request.POST['audience']   
             token = get_access_token_model().objects.get(
                 token=content['access_token']
             )            
