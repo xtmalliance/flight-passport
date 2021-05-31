@@ -93,6 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'flight_passport.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 SOCIALACCOUNT_AUTO_SIGNUP = False 
 ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
