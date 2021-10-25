@@ -10,7 +10,7 @@ from oauth2_provider_jwt.utils import decode_jwt_user_info
 from django.views.generic import TemplateView
 from django.views import View
 from django.conf import settings
-
+from rest_framework import exceptions
 class HomePage(TemplateView):
 	template_name = 'passport_homepage.html'
 
@@ -43,17 +43,18 @@ def get_user(request):
 	m = re.search('(Bearer)(\s)(.*)', app_tk)
 
 	app_tk = m.group(3)
-
+	
 	try:
-	    payload = decode_jwt_user_info(app_tk)
+		payload = decode_jwt_user_info(app_tk)
 	except jwt.ExpiredSignatureError:
-	    msg = 'Signature has expired.'
-	    raise exceptions.AuthenticationFailed(msg)
+		msg = 'Signature has expired.'
+		raise exceptions.AuthenticationFailed(msg)
 	except jwt.DecodeError:
-	    msg = 'Error decoding signature.'
-	    raise exceptions.AuthenticationFailed(msg)
-	except jwt.InvalidTokenError:
-	    raise exceptions.AuthenticationFailed()
+		msg = 'Error decoding signature.'
+		raise exceptions.AuthenticationFailed(msg)
+	except jwt.InvalidTokenError as je:
+		
+		raise exceptions.AuthenticationFailed()
 	email = payload['sub']
 
 	u = get_user_model()

@@ -38,7 +38,7 @@ class BaseScopes(object):
 class PassportScopes(BaseScopes):
     
     def get_all_scopes(self):
-        return []
+        return  {}
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
         all_audiences = application.audience.all()
