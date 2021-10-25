@@ -16,6 +16,9 @@ from oauth2_provider.models import get_access_token_model
 
 from .utils import generate_payload, encode_jwt
 
+from django.shortcuts import render
+
+
 
 # Create your views here.
 
@@ -34,9 +37,10 @@ class IncorrectAudience(Exception):
 class JWTAuthorizationView(views.AuthorizationView):
 
     def get(self, request, *args, **kwargs):
+        
         response = super(JWTAuthorizationView, self).get(request, *args,
                                                          **kwargs)
-
+        
         if request.GET.get('response_type', None) == 'token' \
                 and response.status_code == 302:
             url = urlparse(response.url)
@@ -108,6 +112,7 @@ class TokenView(views.TokenView):
         
 
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
+        
         headers = {'kid': settings.JWKS_KEY_ID}
         token = encode_jwt(payload, headers= headers)
         
@@ -137,13 +142,7 @@ class TokenView(views.TokenView):
                 try:
                     content['access_token'] = self._get_access_token_jwt(
                         request, content)
-                    try:
-                        content = bytes(json.dumps(content), 'utf-8')
-                    except TypeError:
-                        content = bytes(json.dumps(content).encode("utf-8"))
-                    response.content = content
-                    
-                    
+                   
                 except MissingIdAttribute:
                     response.status_code = 400
                     response.content = json.dumps({
@@ -152,7 +151,6 @@ class TokenView(views.TokenView):
                                              "Please set JWT_ID_ATTRIBUTE.",
                     })
                     
-                    
                 except IncorrectAudience:
                     response.status_code = 400
                     response.content = json.dumps({
@@ -160,7 +158,12 @@ class TokenView(views.TokenView):
                         "error_description": "Incorrect Audience. "
                                              "Please set the appropriate audience in the request.",
                     })
+                else:
+                    
+                    try:
+                        content = bytes(json.dumps(content), 'utf-8')
+                    except TypeError:
+                        content = bytes(json.dumps(content).encode("utf-8"))
+                    response.content = content
+                    
         return response
-
-from django.shortcuts import render
-
