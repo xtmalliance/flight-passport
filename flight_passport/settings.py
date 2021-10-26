@@ -191,7 +191,9 @@ OAUTH2_PROVIDER = {
     "OAUTH2_VALIDATOR_CLASS": "authprofiles.oauth_validators.PassportOAuth2Validator",
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
-    "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600
+    "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600,
+    "ID_TOKEN_EXPIRE_SECONDS":3600, 
+    
 }
 
 django_heroku.settings(locals())

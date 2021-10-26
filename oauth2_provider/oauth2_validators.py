@@ -761,13 +761,14 @@ class OAuth2Validator(RequestValidator):
         return oauth2_settings.oidc_issuer(request)
 
     def finalize_id_token(self, id_token, token, token_handler, request):
-        if 'access_token' in token.keys():
-            
-            
-            headers = {'kid': settings.JWKS_KEY_ID}
         
+        if 'access_token' in token.keys():
+            headers = {'kid': settings.JWKS_KEY_ID}
+            
             encoded_token = encode_jwt(token, headers = headers)
+            
         claims, expiration_time = self.get_id_token_dictionary(encoded_token, token_handler, request)
+        
         id_token.update(**claims)
         
         # Workaround for oauthlib bug #746

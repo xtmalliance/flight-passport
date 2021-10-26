@@ -129,7 +129,7 @@ class TokenView(views.TokenView):
         content = ast.literal_eval(response.content.decode("utf-8"))
         request_grant_type = request.POST.get('grant_type')
         
-        if response.status_code == 200 and 'access_token' in content and request_grant_type =='client_credentials':
+        if response.status_code == 200 and 'access_token' in content and request_grant_type in ['client_credentials']:
             if not TokenView._is_jwt_config_set():
                 logger.warning('Missing JWT configuration, skipping token build')
             else:
