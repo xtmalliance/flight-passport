@@ -1,8 +1,7 @@
-# from .settings import oauth2_settings
-from django.conf import settings
+from .settings import oauth2_settings
 
-class BaseScopes(object):
-    
+
+class BaseScopes:
     def get_all_scopes(self):
         """
         Return a dict-like object with all the scopes available in the
@@ -35,24 +34,17 @@ class BaseScopes(object):
         raise NotImplementedError("")
 
 
-class PassportScopes(BaseScopes):
-    
+class SettingsScopes(BaseScopes):
     def get_all_scopes(self):
-        return  { "openid": "OpenID Connect scope"}
+        return oauth2_settings.SCOPES
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
-        all_audiences = application.audience.all()
-        available_scopes = []
-        for api in all_audiences: 
-            all_api_scopes = api.scopes.all()
-            for cur_scope in all_api_scopes:
-                available_scopes.append(cur_scope.name)
-
-        # based on client class filter read / write scopes 
-        
-        
-
-        return available_scopes
+        return oauth2_settings._SCOPES
 
     def get_default_scopes(self, application=None, request=None, *args, **kwargs):
-        return []
+        return oauth2_settings._DEFAULT_SCOPES
+
+
+def get_scopes_backend():
+    scopes_class = oauth2_settings.SCOPES_BACKEND_CLASS
+    return scopes_class()

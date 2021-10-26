@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -156,8 +156,7 @@ AUTHENTICATION_BACKENDS = (
 JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
-JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("PRIVATE_KEY")
-JWT_PUBLIC_KEY_OPENSKIES = os.environ.get("PUBLIC_KEY")
+JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 JWKS_KEY_ID= json.loads(os.environ.get("JWKS_KEY"))['kid']
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
@@ -185,6 +184,8 @@ STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
     # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+    'OIDC_ENABLED' :True,
+    "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
     'REQUEST_APPROVAL_PROMPT':"auto",

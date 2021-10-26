@@ -37,12 +37,11 @@ if settings.SHOW_ADMIN:
 
 urlpatterns += [
     
-    path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')),
-    path(".well-known/jwks.json",vault_views.GetJWKS.as_view(), name='get-jwks'),
-    path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
-    path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),
+    path("oauth/", include('oauth2_provider.urls', namespace='oauth2_provider')),    
+    # path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')),
+    path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),   
     
     path("accounts/", include('allauth.urls')),
-    path("userinfo/", vault_views.get_user, {}, 'current_user'),
+    
     path('', vault_views.HomePage.as_view(), name='home'),
 ]

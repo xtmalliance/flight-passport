@@ -36,11 +36,9 @@ class IncorrectAudience(Exception):
 
 class JWTAuthorizationView(views.AuthorizationView):
 
-    def get(self, request, *args, **kwargs):
-        
+    def get(self, request, *args, **kwargs):        
         response = super(JWTAuthorizationView, self).get(request, *args,
-                                                         **kwargs)
-        
+                                                         **kwargs)        
         if request.GET.get('response_type', None) == 'token' \
                 and response.status_code == 302:
             url = urlparse(response.url)
@@ -68,6 +66,7 @@ class TokenView(views.TokenView):
         payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)
         request_params = list(request.POST.keys())     
         
+        token = get_access_token_model().objects.get(token=content['access_token'])            
         if payload_enricher:
             fn = import_string(payload_enricher)
             extra_data = fn(request)
@@ -79,9 +78,6 @@ class TokenView(views.TokenView):
             
         if 'audience' in request_params: 
             requested_audience = request.POST['audience']   
-            token = get_access_token_model().objects.get(
-                token=content['access_token']
-            )            
             audience_query = token.application.audience.all().only('identifier')
             all_audience = [audience.identifier for audience in audience_query]
             
@@ -95,11 +91,8 @@ class TokenView(views.TokenView):
 
         id_attribute = getattr(settings, 'JWT_ID_ATTRIBUTE', None)
         
-        if id_attribute:
-            token = get_access_token_model().objects.get(token=content['access_token'])
-            
-            token_user = token.user
-            ## check the allowed scopes for user and content scopes 
+        if id_attribute:            
+            token_user = token.user            
             try: 
                 assert token_user is not None
                 id_value = getattr(token_user, id_attribute, None)
@@ -110,10 +103,10 @@ class TokenView(views.TokenView):
             
             extra_data['sub'] = str(id_value)
         
-
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
         
         headers = {'kid': settings.JWKS_KEY_ID}
+        
         token = encode_jwt(payload, headers= headers)
         
         return token
@@ -132,14 +125,17 @@ class TokenView(views.TokenView):
     def post(self, request, *args, **kwargs):
         
         response = super(TokenView, self).post(request, *args, **kwargs)
-
+        
         content = ast.literal_eval(response.content.decode("utf-8"))
-
-        if response.status_code == 200 and 'access_token' in content:
+        request_grant_type = request.POST.get('grant_type')
+        
+        if response.status_code == 200 and 'access_token' in content and request_grant_type =='client_credentials':
             if not TokenView._is_jwt_config_set():
                 logger.warning('Missing JWT configuration, skipping token build')
             else:
+                
                 try:
+                    
                     content['access_token'] = self._get_access_token_jwt(
                         request, content)
                    
@@ -159,6 +155,7 @@ class TokenView(views.TokenView):
                                              "Please set the appropriate audience in the request.",
                     })
                 else:
+                    # print(content)
                     
                     try:
                         content = bytes(json.dumps(content), 'utf-8')
