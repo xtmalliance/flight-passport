@@ -188,6 +188,7 @@ OAUTH2_PROVIDER = {
     "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
+    "OAUTH2_VALIDATOR_CLASS": "authprofiles.oauth_validators.PassportOAuth2Validator",
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600

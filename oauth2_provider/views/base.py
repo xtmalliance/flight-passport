@@ -157,7 +157,6 @@ class AuthorizationView(BaseAuthorizationView, FormView):
 
         # TODO: Cache this!
         application = get_application_model().objects.get(client_id=credentials["client_id"])
-        print('applica')
         kwargs["application"] = application
         kwargs["client_id"] = credentials["client_id"]
         kwargs["redirect_uri"] = credentials["redirect_uri"]
@@ -200,7 +199,7 @@ class AuthorizationView(BaseAuthorizationView, FormView):
                     )
                     .all()
                 )
-
+                
                 # check past authorizations regarded the same scopes as the current one
                 for token in tokens:
                     if token.allow_scopes(scopes):

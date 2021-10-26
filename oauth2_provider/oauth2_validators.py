@@ -34,7 +34,8 @@ from .models import (
 )
 from .scopes import get_scopes_backend
 from .settings import oauth2_settings
-
+from oauth2_provider_jwt.utils import encode_jwt
+from django.conf import settings
 
 log = logging.getLogger("oauth2_provider")
 
@@ -358,7 +359,7 @@ class OAuth2Validator(RequestValidator):
 
             scope = content.get("scope", "")
             expires = make_aware(expires)
-
+            
             access_token, _created = AccessToken.objects.update_or_create(
                 token=token,
                 defaults={
@@ -723,7 +724,7 @@ class OAuth2Validator(RequestValidator):
     def get_oidc_claims(self, token, token_handler, request):
         # Required OIDC claims
         claims = {
-            "sub": str(request.user.email),
+            "sub": str(request.user.id),
         }
 
         # https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
@@ -760,8 +761,15 @@ class OAuth2Validator(RequestValidator):
         return oauth2_settings.oidc_issuer(request)
 
     def finalize_id_token(self, id_token, token, token_handler, request):
-        claims, expiration_time = self.get_id_token_dictionary(token, token_handler, request)
+        if 'access_token' in token.keys():
+            
+            
+            headers = {'kid': settings.JWKS_KEY_ID}
+        
+            encoded_token = encode_jwt(token, headers = headers)
+        claims, expiration_time = self.get_id_token_dictionary(encoded_token, token_handler, request)
         id_token.update(**claims)
+        
         # Workaround for oauthlib bug #746
         # https://github.com/oauthlib/oauthlib/issues/746
         if "nonce" not in id_token and request.nonce:
@@ -774,8 +782,7 @@ class OAuth2Validator(RequestValidator):
         # RS256 consumers expect a kid in the header for verifying the token
         if request.client.algorithm == AbstractApplication.RS256_ALGORITHM:
             header["kid"] = request.client.jwk_key.thumbprint()
-        print('heres')
-        print(header, id_token)
+            
         jwt_token = jwt.JWT(
             header=json.dumps(header, default=str),
             claims=json.dumps(id_token, default=str),
@@ -814,8 +821,7 @@ class OAuth2Validator(RequestValidator):
 
     def _load_id_token(self, token):
         key = self._get_key_for_token(token)
-        print('token')
-        print(token)
+        
         if not key:
             return None
         try:

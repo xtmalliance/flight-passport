@@ -41,17 +41,18 @@ def encode_jwt(payload, headers=None):
     """
     # RS256 in default, because hardcoded legacy
     algorithm = getattr(settings, 'JWT_ENC_ALGORITHM', 'RS256')
-
-    private_key_name = 'JWT_PRIVATE_KEY_{}'.format(payload['issuer_shortname'].upper())
+    issuer_shortname = settings.JWT_ISSUER
+    
+    private_key_name = 'JWT_PRIVATE_KEY_{}'.format(issuer_shortname.upper())
     private_key = getattr(settings, private_key_name, None)
-    del payload['issuer_shortname']
     if not private_key:
         raise ImproperlyConfigured('Missing setting {}'.format(
             private_key_name))
     encoded = jwt.encode(payload, private_key, algorithm=algorithm,
                          headers=headers)
-    return encoded.decode("utf-8")
-    # return encoded
+    
+    # return encoded.decode("utf-8")
+    return encoded
 
 
 def decode_jwt(jwt_value):

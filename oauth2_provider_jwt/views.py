@@ -16,7 +16,6 @@ from oauth2_provider.models import get_access_token_model
 
 from .utils import generate_payload, encode_jwt
 
-from django.shortcuts import render
 
 
 
@@ -38,7 +37,8 @@ class JWTAuthorizationView(views.AuthorizationView):
 
     def get(self, request, *args, **kwargs):        
         response = super(JWTAuthorizationView, self).get(request, *args,
-                                                         **kwargs)        
+                                                         **kwargs)   
+
         if request.GET.get('response_type', None) == 'token' \
                 and response.status_code == 302:
             url = urlparse(response.url)
@@ -61,7 +61,7 @@ class JWTAuthorizationView(views.AuthorizationView):
 class TokenView(views.TokenView):
     def _get_access_token_jwt(self, request, content):
         extra_data = {}
-        issuer_shortname = settings.JWT_ISSUER
+        
         issuer = settings.JWT_ISSUER_DOMAIN
         payload_enricher = getattr(settings, 'JWT_PAYLOAD_ENRICHER', None)
         request_params = list(request.POST.keys())     
@@ -74,7 +74,7 @@ class TokenView(views.TokenView):
         if 'scope' in content:
             extra_data['scope'] = content['scope']
             extra_data['typ'] = "Bearer"
-            extra_data['issuer_shortname'] = issuer_shortname
+            
             
         if 'audience' in request_params: 
             requested_audience = request.POST['audience']   
@@ -155,7 +155,6 @@ class TokenView(views.TokenView):
                                              "Please set the appropriate audience in the request.",
                     })
                 else:
-                    # print(content)
                     
                     try:
                         content = bytes(json.dumps(content), 'utf-8')
