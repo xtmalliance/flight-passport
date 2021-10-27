@@ -1,6 +1,15 @@
-
-
+from django.http import HttpResponse, JsonResponse
+from oauth2_provider.decorators import protected_resource
+import json
+from oauth2_provider.models import AccessToken
+import re, os
+from django.contrib.auth import get_user_model
+import jwt
+from oauth2_provider_jwt.utils import decode_jwt_user_info
 from django.views.generic import TemplateView
+from django.views import View
+from rest_framework import exceptions
+
 class HomePage(TemplateView):
 	template_name = 'passport_homepage.html'
 
@@ -24,38 +33,36 @@ class ErrorView(TemplateView):
 
         return view_fn
     
-
-
 	
-# def get_user(request):
+def get_user(request):
 
-# 	app_tk = request.META["HTTP_AUTHORIZATION"]
-# 	m = re.search('(Bearer)(\s)(.*)', app_tk)
+	app_tk = request.META["HTTP_AUTHORIZATION"]
+	m = re.search('(Bearer)(\s)(.*)', app_tk)
 
-# 	app_tk = m.group(3)
+	app_tk = m.group(3)
 	
-# 	try:
-# 		payload = decode_jwt_user_info(app_tk)
-# 	except jwt.ExpiredSignatureError:
-# 		msg = 'Signature has expired.'
-# 		raise exceptions.AuthenticationFailed(msg)
-# 	except jwt.DecodeError:
-# 		msg = 'Error decoding signature.'
-# 		raise exceptions.AuthenticationFailed(msg)
-# 	except jwt.InvalidTokenError as je:
+	try:
+		payload = decode_jwt_user_info(app_tk)
+	except jwt.ExpiredSignatureError:
+		msg = 'Signature has expired.'
+		raise exceptions.AuthenticationFailed(msg)
+	except jwt.DecodeError:
+		msg = 'Error decoding signature.'
+		raise exceptions.AuthenticationFailed(msg)
+	except jwt.InvalidTokenError as je:
 		
-# 		raise exceptions.AuthenticationFailed()
-# 	email = payload['sub']
+		raise exceptions.AuthenticationFailed()
+	email = payload['sub']
 
-# 	u = get_user_model()
-# 	user = u.objects.get(email = email)
+	u = get_user_model()
+	user = u.objects.get(email = email)
 	
 
-# 	return HttpResponse(
-# 		json.dumps({
-# 		    'username': user.username, 
-# 		    'email': user.email}),
-# 		content_type='application/json')
+	return HttpResponse(
+		json.dumps({
+		    'username': user.username, 
+		    'email': user.email}),
+		content_type='application/json')
  
  
 # class GetJWKS(View):

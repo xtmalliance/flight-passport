@@ -79,3 +79,26 @@ def decode_jwt(jwt_value):
     decoded = jwt.decode(jwt_value, public_key, algorithms=algorithms)
     return decoded
 
+def decode_jwt_user_info(jwt_value):
+    """
+    :type jwt_value: str
+    """
+    try:
+        headers_enc, payload_enc, verify_signature = jwt_value.split(".")
+    except ValueError:
+        raise jwt.InvalidTokenError()
+
+    # payload_enc += '=' * (-len(payload_enc) % 4)  # add padding
+    # payload = json.loads(base64.b64decode(payload_enc).decode("utf-8"))
+
+    algorithms = getattr(settings, 'JWT_JWS_ALGORITHMS', ['HS256', 'RS256'])   
+
+
+    if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
+        private_key = jwk.JWK.from_pem(oauth2_settings.OIDC_RSA_PRIVATE_KEY.encode("utf8"))
+        public_key_pem = private_key.export_to_pem(private_key=False)
+        
+        
+
+    decoded = jwt.decode(jwt_value, public_key_pem, algorithms=algorithms)
+    return decoded

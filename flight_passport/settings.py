@@ -70,6 +70,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'flight_passport.urls'
 
+APPEND_SLASH= False
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -157,6 +159,7 @@ JWT_ISSUER = 'Openskies'
 JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
+
 JWKS_KEY_ID= json.loads(os.environ.get("JWKS_KEY"))['kid']
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
