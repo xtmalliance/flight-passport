@@ -128,7 +128,7 @@ class TokenView(views.TokenView):
         
         content = ast.literal_eval(response.content.decode("utf-8"))
         request_grant_type = request.POST.get('grant_type')
-        
+        # Per the ASTM standards on UTM only the 'client_credentails' grant must be a JWT
         if response.status_code == 200 and 'access_token' in content and request_grant_type in ['client_credentials']:
             if not TokenView._is_jwt_config_set():
                 logger.warning('Missing JWT configuration, skipping token build')
@@ -136,8 +136,9 @@ class TokenView(views.TokenView):
                 
                 try:
                     
-                    content['access_token'] = self._get_access_token_jwt(
+                    token_bytes = self._get_access_token_jwt(
                         request, content)
+                    content['access_token'] = token_bytes.decode('utf-8')
                    
                 except MissingIdAttribute:
                     response.status_code = 400
@@ -155,11 +156,7 @@ class TokenView(views.TokenView):
                                              "Please set the appropriate audience in the request.",
                     })
                 else:
-                    
-                    try:
-                        content = bytes(json.dumps(content), 'utf-8')
-                    except TypeError:
-                        content = bytes(json.dumps(content).encode("utf-8"))
+                    content = json.dumps(content)
                     response.content = content
                     
         return response
