@@ -136,9 +136,11 @@ class TokenView(views.TokenView):
                 
                 try:
                     
-                    token_bytes = self._get_access_token_jwt(
+                    token_raw = self._get_access_token_jwt(
                         request, content)
-                    content['access_token'] = token_bytes.decode('utf-8')
+                    if not isinstance(token_raw, str):
+                        token_raw = token_raw.decode('utf-8')
+                    content['access_token'] = token_raw
                    
                 except MissingIdAttribute:
                     response.status_code = 400

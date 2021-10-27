@@ -70,7 +70,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'flight_passport.urls'
 
-APPEND_SLASH= False
 
 TEMPLATES = [
     {
