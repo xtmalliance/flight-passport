@@ -32,7 +32,6 @@ def generate_payload(issuer, expires_in, **extra_data):
 
     return payload
 
-
 def encode_jwt(payload, headers=None):
     """
     :type payload: dict

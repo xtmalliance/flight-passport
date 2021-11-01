@@ -8,6 +8,7 @@ except ImportError:
     from urllib import urlencode # noqa
     from urlparse import urlparse, parse_qs
 
+from oauth2_provider.settings import oauth2_settings
 from django.conf import settings
 from django.utils.module_loading import import_string
 from oauth2_provider import views
@@ -104,8 +105,14 @@ class TokenView(views.TokenView):
             extra_data['sub'] = str(id_value)
         
         payload = generate_payload(issuer, content['expires_in'], **extra_data)
+            
+        if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
+            key = jwk.JWK.from_pem(oauth2_settings.OIDC_RSA_PRIVATE_KEY.encode("utf8"))
+            kid = key.thumbprint()
+        else: 
+            kid =  settings.JWKS_KEY_ID
         
-        headers = {'kid': settings.JWKS_KEY_ID}
+        headers = {'kid': kid}
         
         token = encode_jwt(payload, headers= headers)
         
