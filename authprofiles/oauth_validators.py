@@ -8,7 +8,7 @@ class PassportOAuth2Validator(OAuth2Validator):
         
         return {
             "sub": request.user.email,
-            
+            "email":request.user.email            
         }
         
         

@@ -2,14 +2,14 @@
 
 ## Flight Passport OAuth Server
 
-A OAuth provider focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software UTM software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight)) etc.
+A OAuth provider focused on UTM / U-Space that can be self hosted and used to issue JWT tokens for software UTM software like DSS, Registries, Remote ID Display providers (e.g. [Flight Spotlight](https://www.github.com/openskies-sh/flight-spotlight)) etc. In addition you can use this as a OpenID Connect provider (OIDC) for your application providing identity services for your users.
 
 ## Why?
 
-The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT / OAuth 2.0 based tokens to exchange credentials and permissions. There are many open and closed sourced solutions available for issuing tokens. However, based on my work / research there are a few limitations to the current offerings:
+The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT / OAuth 2.0 based tokens to exchange credentials and permissions. There are many open and closed sourced solutions available for issuing tokens. There are a few limitations to the current offerings:
 
 - National Entities may or may not be interested in using private commercial companies for authentication and identity. Since this can be / is a national function, they would prefer to host the platform locally.
-- OAuth / OpenID / Open ID Connect stack are a “general purpose” authentication and identity standard and the commerical solutions available price it very differently. Some charge by number of users, some charge by number of tokens / clients etc. All of this is not really suitable for UTM / U-Space operations.
+- OAuth / OpenID / Open ID Connect stack are a “general purpose” authentication and identity standard and the commercial solutions available price it very differently. Some charge by number of users, some charge by number of tokens / clients etc. All of this is not really suitable for UTM / U-Space operations.
 - The Remote ID standard and demos use the `sub` and `aud` claim in a specific way that a number of commercial solutions do not support out-of-the-box. e.g. Azure does not support “scope” in Client Credentials grant, this is required per the Remote ID standard.
 - On the [open source side](https://oauth.net/code/), a number of them are not totally ready or have very complex installation procedures or have too many features that make it bulky: e.g. user management. These make them unsuitable / overkill for the specific use-cases.
 
@@ -60,6 +60,10 @@ Use a API client such as Postman or Insomnia to run a `client_credentials` reque
 ### 9. Authorization Code request
 
 Once a Application has been created, you can run the  [Sample Client](https://github.com/openskies-sh/flight_passport_sample_client) to run the Authorization Code grant.
+
+### 10. OIDC Grant
+
+You can also implement a login / username password system, for an example see [OIDC Client](https://github.com/openskies-sh/flight_passport_oidc_client).
 
 #### Image credit
 
