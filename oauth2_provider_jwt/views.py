@@ -16,8 +16,7 @@ from oauth2_provider.http import OAuth2ResponseRedirect
 from oauth2_provider.models import get_access_token_model
 
 from .utils import generate_payload, encode_jwt
-
-
+from jwcrypto import jwk
 
 
 # Create your views here.
@@ -110,7 +109,7 @@ class TokenView(views.TokenView):
             key = jwk.JWK.from_pem(oauth2_settings.OIDC_RSA_PRIVATE_KEY.encode("utf8"))
             kid = key.thumbprint()
         else: 
-            kid =  settings.JWKS_KEY_ID
+            kid =  'e28163ce-b86d-4145-8df3-c8dad2e0b601'
         
         headers = {'kid': kid}
         

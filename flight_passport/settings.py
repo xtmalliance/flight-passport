@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -160,7 +160,6 @@ JWT_ISSUER_DOMAIN = 'https://id.openskies.sh/'
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 
-JWKS_KEY_ID= json.loads(os.environ.get("JWKS_KEY"))['kid']
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
 SHOW_ADMIN = int(os.environ.get('SHOW_ADMIN'))
