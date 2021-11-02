@@ -29,7 +29,6 @@ class SignView(View):
             response = JsonResponse({'error': 'client_id, client_secret and raw_data need to be provided'}) 
             logging.error("Invalid data provided in the post request %s" % ke)
         try: 
-            print(client_id, client_secret)
             application = PassportApplication.objects.filter(client_id= client_id, client_secret = client_secret, client_class = 9).exists()
             assert application is not None
         except AssertionError as ae:
@@ -40,8 +39,7 @@ class SignView(View):
             response = JsonResponse({'error': 'Invalid JSON provided to sign'}) 
         signed = sign_json(json_to_sign)
         
-        response = JsonResponse(json.loads(signed))
+        response = JsonResponse(signed)
         
         return response
-        
-        
+    
