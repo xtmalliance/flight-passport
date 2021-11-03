@@ -185,7 +185,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
+    # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
     'OIDC_ENABLED' :True,
     "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
