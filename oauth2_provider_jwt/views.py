@@ -108,6 +108,7 @@ class TokenView(views.TokenView):
         if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
             key = jwk.JWK.from_pem(oauth2_settings.OIDC_RSA_PRIVATE_KEY.encode("utf8"))
             kid = key.thumbprint()
+            
         else: 
             kid =  'e28163ce-b86d-4145-8df3-c8dad2e0b601'
         
