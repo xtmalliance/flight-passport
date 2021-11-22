@@ -19,5 +19,5 @@ def sign_json(payload):
     sig = jws_token.serialize()
     s= json.loads(sig)
     
-    return {"signed": s["protected"]+'.'+s["payload"]+'.'+s["signature"]}
+    return {"signature": s["protected"]+'.'+s["payload"]+'.'+s["signature"]}
 
