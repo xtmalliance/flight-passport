@@ -75,18 +75,29 @@ class TokenView(views.TokenView):
             extra_data['scope'] = content['scope']
             extra_data['typ'] = "Bearer"
             
-            
+        
         if 'audience' in request_params: 
             requested_audience = request.POST['audience']   
             audience_query = token.application.audience.all().only('identifier')
-            all_audience = [audience.identifier for audience in audience_query]
-            
+            all_audience = [audience.identifier for audience in audience_query]            
             try: 
                 assert requested_audience in all_audience
             except AssertionError as ae:
                 raise IncorrectAudience()
             else:                
                 extra_data['aud'] = requested_audience
+
+        if 'flight_plan_id' in request_params:
+            flight_plan_id = request.POST['flight_plan_id']   
+            extra_data['flight_plan_id'] = flight_plan_id
+
+        if 'flight_operation_id' in request_params:
+            flight_operation_id = request.POST['flight_operation_id']   
+            extra_data['flight_operation_id'] = flight_operation_id
+
+        if 'plan_file_hash' in request_params:
+            plan_file_hash = request.POST['plan_file_hash']   
+            extra_data['plan_file_hash'] = plan_file_hash
                 
 
         id_attribute = getattr(settings, 'JWT_ID_ATTRIBUTE', None)
@@ -139,10 +150,8 @@ class TokenView(views.TokenView):
         if response.status_code == 200 and 'access_token' in content:
             if not TokenView._is_jwt_config_set():
                 logger.warning('Missing JWT configuration, skipping token build')
-            else:
-                
-                try:
-                    
+            else:                
+                try:                    
                     token_raw = self._get_access_token_jwt(
                         request, content)
                     if not isinstance(token_raw, str):
