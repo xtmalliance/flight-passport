@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth2_provider',
     'oauth2_provider_jwt',
-    'jws_operations',
     'corsheaders',
     'authprofiles',
     'rolepermissions',
