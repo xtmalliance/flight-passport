@@ -44,6 +44,7 @@ urlpatterns += [
         
     path("o/", include('oauth2_provider.urls', namespace='oauth2_provider')), # Default non-JWT views standard OAUTH lib. 
     path("oauth/", include('oauth2_provider_jwt.urls', namespace='oauth2_provider_jwt')), # for JWT Based OAUTH
+    path("signer/", include('jws_operations.urls', namespace='jws_operations')), # for JWT Based OAUTH
     path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),       
     path("accounts/", include('allauth.urls')),
     re_path(r"^\.well-known/jwks.json$", oauth_views.JwksInfoView.as_view(), name="jwks-info"),

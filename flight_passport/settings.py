@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'authprofiles',
     'rolepermissions',
+    'jws_operations',
     'allauth',
     'vault',
     'allauth.account',
