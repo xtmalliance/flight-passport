@@ -1,9 +1,9 @@
-from django.conf.urls import url
+from django.urls import re_path
 from .views import SignView
 
 app_name = "jws_helper"
 
 urlpatterns = [
-    url(r"^sign/$", SignView.as_view(), name="sign"),
+    re_path(r"^sign/$", SignView.as_view(), name="sign"),
     
 ]
