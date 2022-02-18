@@ -1,4 +1,4 @@
-idna==2.10
+idna==3.3
 Django==4.0.2
 python-dotenv==0.19.2
 cryptography==36.0.1
