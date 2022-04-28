@@ -118,12 +118,11 @@ class TokenView(views.TokenView):
             
         if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
             key = jwk.JWK.from_pem(oauth2_settings.OIDC_RSA_PRIVATE_KEY.encode("utf8"))
-            kid = key.thumbprint()
-            
+            kid = key.thumbprint()            
+            headers = {'kid': kid}            
         else: 
-            kid =  'e28163ce-b86d-4145-8df3-c8dad2e0b601'
+            headers = {}
         
-        headers = {'kid': kid}
         
         token = encode_jwt(payload, headers= headers)
         
@@ -141,11 +140,11 @@ class TokenView(views.TokenView):
             return False
 
     def post(self, request, *args, **kwargs):
-        
+
         response = super(TokenView, self).post(request, *args, **kwargs)
         
         content = ast.literal_eval(response.content.decode("utf-8"))
-        request_grant_type = request.POST.get('grant_type')
+        
         # Per the ASTM standards on UTM only the 'client_credentails' grant must be a JWT
         if response.status_code == 200 and 'access_token' in content:
             if not TokenView._is_jwt_config_set():
