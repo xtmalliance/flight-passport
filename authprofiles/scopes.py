@@ -48,7 +48,6 @@ class PassportScopes(BaseScopes):
         return {"openid": "A read scope", "profile": "A write scope"}
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
-        print('here')
         available_scopes = []
         if application:
             all_audiences = application.audience.all()
