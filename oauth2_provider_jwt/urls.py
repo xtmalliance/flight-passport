@@ -1,7 +1,5 @@
 from django.urls import re_path
-
 from oauth2_provider import views
-
 from .views import TokenView, JWTAuthorizationView
 
 app_name = "oauth2_provider_jwt"
