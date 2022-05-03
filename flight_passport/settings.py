@@ -187,6 +187,7 @@ STATIC_URL = '/static/'
 OAUTH2_PROVIDER = {
     # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
     'OIDC_ENABLED' :True,    
+    'PKCE_REQUIRED': os.environ.get("PKCE_ENABLED",False), 
     "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
