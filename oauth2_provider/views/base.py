@@ -225,10 +225,12 @@ class TokenView(OAuthLibMixin, View):
 
     @method_decorator(sensitive_post_parameters("password"))
     def post(self, request, *args, **kwargs):
-        print('here')
+        
         url, headers, body, status = self.create_token_response(request)
         if status == 200:
             access_token = json.loads(body).get("access_token")
+            print(body)
+            print(access_token)
             if access_token is not None:
                 token = get_access_token_model().objects.get(token=access_token)
                 app_authorized.send(sender=self, request=request, token=token)
