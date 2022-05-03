@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-import json
+
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -194,7 +194,7 @@ OAUTH2_PROVIDER = {
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600,
-    "ID_TOKEN_EXPIRE_SECONDS":3600, 
+    "ID_TOKEN_EXPIRE_SECONDS":3600
     
 }
 
