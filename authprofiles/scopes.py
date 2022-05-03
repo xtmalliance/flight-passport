@@ -58,8 +58,6 @@ class PassportScopes(BaseScopes):
 
             # based on client class filter read / write scopes 
             
-            
-
         return available_scopes
 
     def get_default_scopes(self, application=None, request=None, *args, **kwargs):
