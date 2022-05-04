@@ -156,7 +156,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 JWT_ISSUER = 'Openskies'
-JWT_ISSUER_DOMAIN = os.environ.get("JWT_ISSUER_DOMAIN",'https://id.openskies.sh/')
+JWT_ISSUER_DOMAIN = os.environ.get("JWT_ISSUER_DOMAIN",'https://auth.openskies.sh/')
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 
