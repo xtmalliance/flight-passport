@@ -47,6 +47,7 @@ urlpatterns += [
     path("signer/", include('jws_operations.urls', namespace='jws_operations')), # for JWT Based OAUTH
     path("accounts/email/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")},),       
     path("accounts/", include('allauth.urls')),
+    path("profile/",vault_views.profile, name='profile'),
     re_path(r"^\.well-known/jwks.json$", oauth_views.JwksInfoView.as_view(), name="jwks-info"),
     path('', vault_views.HomePage.as_view(), name='home'),
     path("userinfo/", vault_views.get_user, {}, 'current_user'),

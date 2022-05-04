@@ -6,10 +6,22 @@ import jwt
 from oauth2_provider_jwt.utils import decode_jwt_user_info
 from django.views.generic import TemplateView
 from rest_framework import exceptions
-
+from django.shortcuts import render
+from django.core.serializers import serialize 
+from django.contrib.auth.decorators import login_required
+from django.core.serializers.json import DjangoJSONEncoder
 class HomePage(TemplateView):
 	template_name = 'passport_homepage.html'
 
+@login_required
+def profile(request):
+	user = request.user
+	c = {
+            "username": user.username,
+            "email": user.email
+        }
+
+	return render(request, 'profile.html',c)
 
 class NotFoundView(TemplateView):
     template_name = "404.html"

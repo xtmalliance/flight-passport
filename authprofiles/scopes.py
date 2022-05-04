@@ -38,10 +38,10 @@ class BaseScopes(object):
 class PassportScopes(BaseScopes):
     
     def get_all_scopes(self):
-        return  { "openid": "OpenID Connect scope"}
+        return  { "openid": "OpenID Connect scope", "profile":"OpenID profile"}
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
-        available_scopes = []
+        available_scopes = ['openid','profile']
         if application: 
             all_audiences = application.audience.all()
             for api in all_audiences: 
