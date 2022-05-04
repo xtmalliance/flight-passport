@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0or#&2-lxo-*=33d1(3ke9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -191,7 +191,7 @@ OAUTH2_PROVIDER = {
     "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
-    "VALIDATOR_CLASS": "authprofiles.oauth_validators.PassportOAuth2Validator",
+    "OAUTH2_VALIDATOR_CLASS": "authprofiles.oauth_validators.PassportOAuth2Validator",
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600,
