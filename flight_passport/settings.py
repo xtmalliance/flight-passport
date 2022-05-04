@@ -196,5 +196,51 @@ OAUTH2_PROVIDER = {
     "ID_TOKEN_EXPIRE_SECONDS":3600, 
     
 }
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'formatters': {
+        'verbose': {
+        'format': '%(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)d: %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'INFO',
+            'handlers': ['console'],
+        },
+        'oauth2_provider': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+        'oauthlib': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+        'myapp': {
+            'level': 'INFO',
+            'handlers': ['console'],
+        },
+        'oauth': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    }
+}
 django_heroku.settings(locals())
