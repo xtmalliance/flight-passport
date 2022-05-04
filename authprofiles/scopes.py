@@ -41,14 +41,15 @@ class PassportScopes(BaseScopes):
         return  { "openid": "OpenID Connect scope"}
 
     def get_available_scopes(self, application=None, request=None, *args, **kwargs):
-        all_audiences = application.audience.all()
         available_scopes = []
-        for api in all_audiences: 
-            all_api_scopes = api.scopes.all()
-            for cur_scope in all_api_scopes:
-                available_scopes.append(cur_scope.name)
+        if application: 
+            all_audiences = application.audience.all()
+            for api in all_audiences: 
+                all_api_scopes = api.scopes.all()
+                for cur_scope in all_api_scopes:
+                    available_scopes.append(cur_scope.name)
 
-        # based on client class filter read / write scopes 
+            # based on client class filter read / write scopes 
         
         
 
