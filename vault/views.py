@@ -1,13 +1,10 @@
-from django.http import HttpResponse, JsonResponse
-from oauth2_provider.decorators import protected_resource
+from django.http import HttpResponse
 import json
-from oauth2_provider.models import AccessToken
-import re, os
+import re
 from django.contrib.auth import get_user_model
 import jwt
 from oauth2_provider_jwt.utils import decode_jwt_user_info
 from django.views.generic import TemplateView
-from django.views import View
 from rest_framework import exceptions
 
 class HomePage(TemplateView):
