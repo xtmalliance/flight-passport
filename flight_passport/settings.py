@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# import django_heroku
 from dotenv import load_dotenv, find_dotenv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -153,7 +152,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 JWT_ISSUER = 'Openskies'
-JWT_ISSUER_DOMAIN = os.environ.get("JWT_ISSUER_DOMAIN",'https://auth.openskies.sh/')
+JWT_ISSUER_DOMAIN = os.environ.get("JWT_ISSUER_DOMAIN",'https://id.openskies.sh/')
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 
@@ -206,51 +205,50 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
-    'formatters': {
-        'verbose': {
-        'format': '%(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)d: %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'INFO',
-            'handlers': ['console'],
-        },
-        'oauth2_provider': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        },
-        'oauthlib': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        },
-        'myapp': {
-            'level': 'INFO',
-            'handlers': ['console'],
-        },
-        'oauth': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        },
-    }
-}
-# django_heroku.settings(locals())
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'formatters': {
+#         'verbose': {
+#         'format': '%(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)d: %(message)s'
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'INFO',
+#             'handlers': ['console'],
+#         },
+#         'oauth2_provider': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         },
+#         'oauthlib': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         },
+#         'myapp': {
+#             'level': 'INFO',
+#             'handlers': ['console'],
+#         },
+#         'oauth': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         },
+#     }
+# }
