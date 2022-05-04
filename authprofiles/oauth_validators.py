@@ -1,7 +1,7 @@
 from oauth2_provider.oauth2_validators import OAuth2Validator
 
-# from oauth2_provider_jwt.utils import encode_jwt
-# from django.conf import settings
+from oauth2_provider_jwt.utils import encode_jwt
+from django.conf import settings
 
 class PassportOAuth2Validator(OAuth2Validator):
     def get_additional_claims(self, request):

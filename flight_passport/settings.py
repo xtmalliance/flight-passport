@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
+import json
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -57,6 +57,7 @@ SITE_ID = 1
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -185,8 +186,7 @@ STATIC_URL = '/static/'
 
 OAUTH2_PROVIDER = {
     # 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-    'OIDC_ENABLED' :True,    
-    'PKCE_REQUIRED': os.environ.get("PKCE_ENABLED",False), 
+    'OIDC_ENABLED' :True,
     "OIDC_RSA_PRIVATE_KEY": os.environ.get("OIDC_RSA_PRIVATE_KEY"),
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
@@ -194,7 +194,7 @@ OAUTH2_PROVIDER = {
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600,
-    "ID_TOKEN_EXPIRE_SECONDS":3600
+    "ID_TOKEN_EXPIRE_SECONDS":3600, 
     
 }
 
