@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -162,7 +162,7 @@ JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")
 
 JWT_PAYLOAD_ENRICHER = 'vault.jwt_utils.payload_enricher'
 
-SHOW_ADMIN = int(os.environ.get('SHOW_ADMIN'))
+SHOW_ADMIN = int(os.environ.get('SHOW_ADMIN',0))
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -192,7 +192,6 @@ OAUTH2_PROVIDER = {
     'APPLICATION_MODEL': 'authprofiles.PassportApplication',
     'SCOPES_BACKEND_CLASS' :'authprofiles.scopes.PassportScopes',
     "VALIDATOR_CLASS": "authprofiles.oauth_validators.PassportOAuth2Validator",
-    ""
     'REQUEST_APPROVAL_PROMPT':"auto",
     "ACCESS_TOKEN_EXPIRE_SECONDS" : 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS" : 3600,
