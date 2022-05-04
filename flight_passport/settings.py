@@ -70,7 +70,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'flight_passport.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -102,7 +101,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
 DEFAULT_FROM_EMAIL = 'Openskies Flight Passport Support <noreply@openskies.sh>'
 LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
-APPLICATION_NAME = 'Openskies.sh - Trust Bridge'
+APPLICATION_NAME = 'Openskies Flight Passport'
 
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
