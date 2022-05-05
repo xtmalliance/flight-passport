@@ -26,11 +26,8 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0or#&2-lxo-*=33d1(3ke9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug_mode = os.environ.get("ENABLE_DEBUG",0)
-if debug_mode: 
-    DEBUG = True
-else: 
-    DEBUG = False
+
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
