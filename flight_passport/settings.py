@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0o
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["id.openskies.sh"]
 
 # Application definition
 
