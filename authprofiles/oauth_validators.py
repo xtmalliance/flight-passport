@@ -8,12 +8,11 @@ class PassportOAuth2Validator(OAuth2Validator):
         groups = []
         for g in request.user.groups.all():
             groups.append(g.name)
-        return {
-            "sub": request.user.email,
-            "email":request.user.email,       
-            "groups": groups
-        }
         
+        return {
+            "email":request.user.email,       
+            "role": ' '.join(groups)
+        }
         
     def get_userinfo_claims(self, request):
         claims = super().get_userinfo_claims(request)
