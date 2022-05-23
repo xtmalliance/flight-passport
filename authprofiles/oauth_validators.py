@@ -5,10 +5,13 @@ from django.conf import settings
 
 class PassportOAuth2Validator(OAuth2Validator):
     def get_additional_claims(self, request):
-        
+        groups = []
+        for g in request.user.groups.all():
+            groups.append(g.name)
         return {
             "sub": request.user.email,
-            "email":request.user.email            
+            "email":request.user.email,       
+            "groups": groups
         }
         
         
