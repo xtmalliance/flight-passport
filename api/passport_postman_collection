@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "bcdcb175-8aea-4d9b-bce6-15cb8f6457a3",
+		"name": "Flight Passport Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "393882"
+	},
+	"item": [
+		{
+			"name": "Flight Passport Get WellKnown",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://local.test:8000/o/.well-known/openid-configuration",
+					"protocol": "http",
+					"host": [
+						"local",
+						"test"
+					],
+					"port": "8000",
+					"path": [
+						"o",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Aerobridge Filght Permission Signing",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "{{aerobridge_scopes}}",
+							"description": "Use the resource you want a token for plus `/.default` in order to get a token for the permissions that have been granted in the tenant for this app on that resource. ",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "audience",
+							"value": "{{aerobridge_audience}}",
+							"type": "text"
+						},
+						{
+							"key": "flight_plan_id",
+							"value": "ba0e9e96-8176-49b0-8f84-9ce6871daee7",
+							"type": "text"
+						},
+						{
+							"key": "flight_operation_id",
+							"value": "9d7584bd-8b63-4f10-8e17-29edad1e8779",
+							"type": "text"
+						},
+						{
+							"key": "plan_file_hash",
+							"value": "33386d60e8edc6f95d6bb620b86333b8075c4d9e",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://local.test:8000/oauth/token/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"test"
+					],
+					"port": "8000",
+					"path": [
+						"oauth",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample Client Credentials Grant JSON",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "audience",
+							"value": "{{aerobridge_audience}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "{{aerobridge_scopes}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://local.test:8000/o/token/",
+					"protocol": "http",
+					"host": [
+						"local",
+						"test"
+					],
+					"port": "8000",
+					"path": [
+						"o",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Flight Passport Get WellKnown Auth Server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://local.test:8000/o/.well-known/openid-configuration",
+					"protocol": "http",
+					"host": [
+						"local",
+						"test"
+					],
+					"port": "8000",
+					"path": [
+						"o",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetJWKS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://local.test:8000/.well-known/jwks.json",
+					"protocol": "http",
+					"host": [
+						"local",
+						"test"
+					],
+					"port": "8000",
+					"path": [
+						".well-known",
+						"jwks.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
