@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0o
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["id.openskies.sh"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -131,12 +131,7 @@ EMAIL_USE_TLS = True
 
 ACCOUNT_FORMS = {'signup': 'authprofiles.forms.PassportSignUpForm', 'login':'authprofiles.forms.PassportLoginForm',  'reset_password': 'authprofiles.forms.ResetPasswordForm',}
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -212,11 +207,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "flight_passport.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
+    }
+}
+
+
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
