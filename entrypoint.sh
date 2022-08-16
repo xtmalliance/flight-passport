@@ -10,7 +10,7 @@ python manage.py migrate --noinput
 echo "Creating superuser.."
 python manage.py createsuperuser --noinput
 echo "Collecting static"
-python manage.py createsuperuser --noinput
+python manage.py collectstatic
 # Start server
 echo "Starting server.."
 python manage.py runserver 0.0.0.0:8000
