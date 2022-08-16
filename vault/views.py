@@ -73,10 +73,3 @@ def get_user(request):
 		    'email': user.email}),
 		content_type='application/json')
  
- 
-# class GetJWKS(View):
-
-#     def get(self, request, *args, **kwargs):
-#         jwks = {"keys":[json.loads(os.environ.get('JWKS_KEY'))]}
-#         return JsonResponse(jwks)
-

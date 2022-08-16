@@ -6,8 +6,9 @@
 
 # Apply database migrations
 echo "Apply database migrations"
-python manage.py migrate
-
+python manage.py migrate --noinput
+echo "Creating superuser.."
+python manage.py init_admin
 # Start server
-echo "Starting server"
+echo "Starting server.."
 python manage.py runserver 0.0.0.0:8000

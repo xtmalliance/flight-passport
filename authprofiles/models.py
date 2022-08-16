@@ -37,7 +37,7 @@ class PassportAPI(models.Model):
 
 
 class PassportApplication(AbstractApplication):
-    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('Remote ID Display Provider')),(2, _('Registry Reader')),(3, _('Login only')),(4, _('Flight Spotlight Reader')),(5, _('Flight Spotlight Writer')),(6, _('Remote ID Service Provider')),(7, _('Flight Blender Read - Write')), (8, _('Aerobridge Read and Write')),(9, _('Permission Signing Client')),)
+    APPLICATION_CLASS_CHOICES = ((0, _('Other')),(1, _('Remote ID Display Provider')),(2, _('Registry Reader')),(3, _('Login only')),(4, _('Flight Spotlight Read - Write')),(5, _('Remote ID Service Provider')),(6, _('Flight Blender Read - Write')), (7, _('Aerobridge Read and Write')),(8, _('Permission Signing Client')),)
     client_class = models.IntegerField(choices=APPLICATION_CLASS_CHOICES,default=0)
     audience = models.ManyToManyField(PassportAPI, related_name = 'application_audience', blank=True)    
     
