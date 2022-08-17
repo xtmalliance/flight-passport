@@ -34,6 +34,13 @@ else:
 
 ALLOWED_HOSTS = ["*"]
 
+issuer_domain =  os.environ.get("JWT_ISSUER_DOMAIN", None)
+if issuer_domain:
+    ALLOWED_HOSTS = [issuer_domain]
+    CSRF_TRUSTED_ORIGINS = [issuer_domain]
+    CORS_ORIGIN_WHITELIST = [issuer_domain]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -158,7 +165,7 @@ AUTHENTICATION_BACKENDS = (
     'oauth2_provider.backends.OAuth2Backend',
 )
 
-JWT_ISSUER = 'Openskies'
+JWT_ISSUER = os.environ.get("JWT_ISSUER_NAME",'Openskies')
 JWT_ISSUER_DOMAIN = os.environ.get("JWT_ISSUER_DOMAIN",'https://id.openskies.sh/')
 JWT_ID_ATTRIBUTE = 'email'
 JWT_PRIVATE_KEY_OPENSKIES = os.environ.get("OIDC_RSA_PRIVATE_KEY")

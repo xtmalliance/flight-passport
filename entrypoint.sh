@@ -7,7 +7,9 @@
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate --noinput
-echo "Creating superuser.."
+echo "Setting site name"
+python manage.py initialize_db
+echo "Creating superuser"
 python manage.py init_admin
 echo "Collecting static"
 python manage.py collectstatic --noinput
