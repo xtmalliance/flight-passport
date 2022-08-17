@@ -224,7 +224,20 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+USING_DOCKER_COMPOSE = os.environ.get("USING_DOCKER_COMPOSE",0)
+if USING_DOCKER_COMPOSE: 
+    DATABASES = {
+        "default": {
+            "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+            "NAME": os.environ.get("DB_DATABASE", os.path.join(BASE_DIR, "flight_passport.sqlite3")),
+            "USER": os.environ.get("DB_USER", "user"),
+            "PASSWORD": os.environ.get("SDB_PASSWORD", "password"),
+            "HOST": os.environ.get("DB_HOST", "localhost"),
+            "PORT": os.environ.get("DB_PORT", "5432"),
+        }
+    }
+else: 
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # LOGGING = {
 #     'version': 1,
