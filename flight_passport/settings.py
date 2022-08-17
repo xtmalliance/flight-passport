@@ -102,10 +102,7 @@ DJANGO_SUPERUSER_USERNAME = os.environ.get("DJANGO_SUPERUSER_USERNAME", 'admin')
 DJANGO_SUPERUSER_EMAIL = os.environ.get("DJANGO_SUPERUSER_EMAIL", 'admin@mysite.com')
 DJANGO_SUPERUSER_INITIAL_PASSWORD =  os.environ.get("DJANGO_SUPERUSER_INITIAL_PASSWORD",'admin') # To be changed after first login by admin
 
-INITIAL_ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-    (DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL),
-)
+
 
 WSGI_APPLICATION = 'flight_passport.wsgi.application'
 
