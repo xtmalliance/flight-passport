@@ -24,7 +24,6 @@ if ENV_FILE:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0or#&2-lxo-*=33d1(3ke9')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 debug_mode = os.environ.get("ENABLE_DEBUG",0)
 if debug_mode: 
@@ -120,7 +119,7 @@ ACCOUNT_AUTHENTICATION_METHOD  = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'authprofiles.adapter.PassportAccountAdapter'
 DEFAULT_FROM_EMAIL = 'Openskies Flight Passport Support <noreply@openskies.sh>'
-LOGO_URL = 'https://about.openskies.sh/images/logo.svg'
+LOGO_URL = 'https://www.openskies.sh/images/logo.svg'
 APPLICATION_NAME = 'Openskies Flight Passport'
 
 ACCOUNT_USERNAME_REQUIRED = False
