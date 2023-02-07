@@ -27,7 +27,7 @@ if ENV_FILE:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", '_m7&5-z7-_+qw*^05k8lg1wrl8ip0or#&2-lxo-*=33d1(3ke9')
 # SECURITY WARNING: don't run with debug turned on in production!
 debug_mode = os.environ.get("ENABLE_DEBUG",0)
-if debug_mode: 
+if int(debug_mode): 
     DEBUG = True
 else: 
     DEBUG = False
@@ -36,7 +36,7 @@ ALLOWED_HOSTS = ["*"]
 
 issuer_domain =  os.environ.get("JWT_ISSUER_DOMAIN", None)
 if issuer_domain:
-    d = urlparse(issuer_domain).netloc
+    d = urlparse(issuer_domain).hostname
     ALLOWED_HOSTS = [d]
     CSRF_TRUSTED_ORIGINS = [issuer_domain]
     CORS_ORIGIN_WHITELIST = [issuer_domain]
@@ -213,12 +213,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 
 # Database
