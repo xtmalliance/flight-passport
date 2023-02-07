@@ -16,6 +16,7 @@ from dotenv import load_dotenv, find_dotenv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 import dj_database_url
+from urllib.parse import urlparse
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 ENV_FILE = find_dotenv()
@@ -35,9 +36,10 @@ ALLOWED_HOSTS = ["*"]
 
 issuer_domain =  os.environ.get("JWT_ISSUER_DOMAIN", None)
 if issuer_domain:
-    ALLOWED_HOSTS = [issuer_domain]
-    CSRF_TRUSTED_ORIGINS = [issuer_domain]
-    CORS_ORIGIN_WHITELIST = [issuer_domain]
+    d = urlparse(issuer_domain).netloc
+    ALLOWED_HOSTS = [d]
+    CSRF_TRUSTED_ORIGINS = [d]
+    CORS_ORIGIN_WHITELIST = [d]
 
 
 # Application definition
