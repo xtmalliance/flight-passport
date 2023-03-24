@@ -18,18 +18,18 @@ class SignView(View):
         try:
             client_id = request_body.get("client_id")
         except KeyError as ke:
-            response = JsonResponse({'message': 'C'}) 
+            response = JsonResponse({'message': 'A Client ID must be provided in the request body'}) 
         try:
             client_secret = request_body.get("client_secret")
         except KeyError as ke:
-            response = JsonResponse({'message': 'C'}) 
+            response = JsonResponse({'message': 'A Client Secret must be provided in the request body'}) 
         try:
             data_to_sign =  request_body.get("raw_data")
         except KeyError as ke:
             response = JsonResponse({'error': 'client_id, client_secret and raw_data need to be provided'}) 
             logging.error("Invalid data provided in the post request %s" % ke)
         try: 
-            application = PassportApplication.objects.filter(client_id= client_id, client_secret = client_secret, client_class = 9).exists()
+            application = PassportApplication.objects.filter(client_id= client_id, client_secret = client_secret, client_class = 5).exists()
             assert application is not None
         except AssertionError as ae:
             response = JsonResponse({'error': 'client_id, client_secret and application type needs to be correctly configured on the server'}) 

@@ -39,7 +39,7 @@ Use `python manage.py createsuperuser` to create a administrator.
 
 ### 4. Create a .env file
 
-Rename the `.env.example` to `.env` and fill in appropriately. You might have to create new key. Follow instructions [here](https://www.howtoforge.com/linux-basics-how-to-install-ssh-keys-on-the-shell) for example.
+Rename the `.env.example` to `.env` and fill in appropriately. Create new key, follow instructions [here](https://django-oauth-toolkit.readthedocs.io/en/latest/oidc.html#creating-rsa-private-key) for example.
 
 ### 6. Set site name and domain
 
@@ -57,11 +57,7 @@ Go to `http://localhost:8000/admin` and login to the Django Admin inter
 
 Use a API client such as Postman or Insomnia to run a `client_credentials` request.
 
-### 9. Authorization Code request
-
-Once a Application has been created, you can run the  [Sample Client](https://github.com/openskies-sh/flight_passport_sample_client) to run the Authorization Code grant.
-
-### 10. OIDC Grant
+### 9. OIDC Grant
 
 You can also implement a login / username password system, for an example see [OIDC Client](https://github.com/openskies-sh/flight_passport_oidc_client).
 
