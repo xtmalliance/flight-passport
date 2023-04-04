@@ -2,8 +2,8 @@ version: "3"
 services:  
   db:
     image: postgres
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     restart: unless-stopped        
     volumes:
       - db_data:/var/lib/postgresql/data
