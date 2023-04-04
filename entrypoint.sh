@@ -4,6 +4,10 @@
 #echo "Collect static files"
 #python manage.py collectstatic --noinput
 
+# Wait the database to start
+echo "Waiting for the database"
+sleep 5
+
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate --noinput
