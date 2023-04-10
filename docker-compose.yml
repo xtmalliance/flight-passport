@@ -2,8 +2,8 @@ version: "3"
 services:  
   db:
     image: postgres
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
     restart: unless-stopped        
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -17,7 +17,7 @@ services:
     image: openskiessh/flight-passport
     command: ./entrypoint.sh
     ports:
-        - "8000:8000"
+        - "9000:9000"
     depends_on:
       - db
     volumes:
