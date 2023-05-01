@@ -17,7 +17,7 @@ services:
     image: openskiessh/flight-passport
     command: ./entrypoint.sh
     ports:
-        - "8000:8000"
+        - "9000:9000"
     depends_on:
       - db
     volumes:
