@@ -128,7 +128,7 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = os.environ.get('ESP_EMAIL_HOST','__smtp.youresp.com__')
-EMAIL_HOST_USER = os.environ.get("ESP_USER_NAME", '000000') # Email service provider API Key
+EMAIL_HOST_USER = os.environ.get("ESP_USER_NAME", '000000') # Email service provider user name
 EMAIL_HOST_PASSWORD = os.environ.get("ESP_API_KEY", '000000') # Email service provider API Key
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
