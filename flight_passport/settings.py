@@ -109,8 +109,6 @@ DJANGO_SUPERUSER_USERNAME = os.environ.get("DJANGO_SUPERUSER_USERNAME", 'admin')
 DJANGO_SUPERUSER_EMAIL = os.environ.get("DJANGO_SUPERUSER_EMAIL", 'admin@mysite.com')
 DJANGO_SUPERUSER_INITIAL_PASSWORD =  os.environ.get("DJANGO_SUPERUSER_INITIAL_PASSWORD",'admin') # To be changed after first login by admin
 
-
-
 WSGI_APPLICATION = 'flight_passport.wsgi.application'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -129,10 +127,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+EMAIL_HOST = os.environ.get('ESP_EMAIL_HOST','__smtp.youresp.com__')
+EMAIL_HOST_USER = os.environ.get("ESP_USER_NAME", '000000') # Email service provider API Key
+EMAIL_HOST_PASSWORD = os.environ.get("ESP_API_KEY", '000000') # Email service provider API Key
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
