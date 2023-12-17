@@ -2,10 +2,8 @@ from __future__ import unicode_literals
 
 import inspect
 
-from rolepermissions.roles import (
-    RolesManager, get_user_roles)
-from rolepermissions.permissions import (
-    PermissionsManager, available_perm_names)
+from rolepermissions.permissions import PermissionsManager, available_perm_names
+from rolepermissions.roles import RolesManager, get_user_roles
 
 
 def has_role(user, roles):
@@ -34,6 +32,7 @@ def has_permission(user, permission_name):
         return True
 
     return permission_name in available_perm_names(user)
+
 
 def has_object_permission(checker_name, user, obj):
     """Check if a user has permission to perform an action on an object."""

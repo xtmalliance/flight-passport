@@ -1,12 +1,10 @@
-from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
-from django.contrib.auth import get_user_model
-from django.utils.encoding import smart_text
 import jwt
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
+from django.utils.encoding import smart_text
 from rest_framework import exceptions
-from rest_framework.authentication import (
-    BaseAuthentication, get_authorization_header
-)
+from rest_framework.authentication import BaseAuthentication, get_authorization_header
 
 from .utils import decode_jwt
 
@@ -16,6 +14,7 @@ class JwtToken(dict):
     Mimics the structure of `AbstractAccessToken` so you can use standard
     Django Oauth Toolkit permissions like `TokenHasScope`.
     """
+
     def __init__(self, payload):
         super(JwtToken, self).__init__(**payload)
 
@@ -62,7 +61,8 @@ class JWTAuthentication(BaseAuthentication):
 
         Authorization: JWT eyJhbGciOiAiSFMyNTYiLCAidHlwIj
     """
-    www_authenticate_realm = 'api'
+
+    www_authenticate_realm = "api"
 
     def authenticate(self, request):
         """
@@ -76,10 +76,10 @@ class JWTAuthentication(BaseAuthentication):
         try:
             payload = decode_jwt(jwt_value)
         except jwt.ExpiredSignatureError:
-            msg = 'Signature has expired.'
+            msg = "Signature has expired."
             raise exceptions.AuthenticationFailed(msg)
         except jwt.DecodeError:
-            msg = 'Error decoding signature.'
+            msg = "Error decoding signature."
             raise exceptions.AuthenticationFailed(msg)
         except jwt.InvalidTokenError:
             raise exceptions.AuthenticationFailed()
@@ -93,37 +93,35 @@ class JWTAuthentication(BaseAuthentication):
         """
         Returns an active user that matches the payload's user id and email.
         """
-        if getattr(settings, 'JWT_AUTH_DISABLED', False):
+        if getattr(settings, "JWT_AUTH_DISABLED", False):
             return AnonymousUser()
 
         User = get_user_model()
-        username = payload.get(getattr(settings, 'JWT_ID_ATTRIBUTE'))
+        username = payload.get(getattr(settings, "JWT_ID_ATTRIBUTE"))
 
         if not username:
-            msg = 'Invalid payload.'
+            msg = "Invalid payload."
             raise exceptions.AuthenticationFailed(msg)
 
         try:
-            kwargs = {
-                getattr(settings, 'JWT_ID_ATTRIBUTE'): username
-            }
+            kwargs = {getattr(settings, "JWT_ID_ATTRIBUTE"): username}
             user = User.objects.get(**kwargs)
         except User.DoesNotExist:
-            msg = 'Invalid signature.'
+            msg = "Invalid signature."
             raise exceptions.AuthenticationFailed(msg)
 
         if not user.is_active:
-            msg = 'User account is disabled.'
+            msg = "User account is disabled."
             raise exceptions.AuthenticationFailed(msg)
 
         return user
 
     def _get_jwt_value(self, request):
         auth = get_authorization_header(request).split()
-        auth_header_prefix = getattr(settings, 'JWT_AUTH_HEADER_PREFIX', 'JWT')
+        auth_header_prefix = getattr(settings, "JWT_AUTH_HEADER_PREFIX", "JWT")
 
         if not auth:
-            if getattr(settings, 'JWT_AUTH_COOKIE', None):
+            if getattr(settings, "JWT_AUTH_COOKIE", None):
                 return request.COOKIES.get(settings.JWT_AUTH_COOKIE)
             return None
 
@@ -131,16 +129,15 @@ class JWTAuthentication(BaseAuthentication):
             return None
 
         if len(auth) == 1:
-            msg = 'Invalid Authorization header. No credentials provided.'
+            msg = "Invalid Authorization header. No credentials provided."
             raise exceptions.AuthenticationFailed(msg)
         elif len(auth) > 2:
-            msg = ('Invalid Authorization header. Credentials string '
-                   'should not contain spaces.')
+            msg = "Invalid Authorization header. Credentials string " "should not contain spaces."
             raise exceptions.AuthenticationFailed(msg)
 
         jwt_value = auth[1]
         if type(jwt_value) is bytes:
-            jwt_value = jwt_value.decode('utf-8')
+            jwt_value = jwt_value.decode("utf-8")
         return jwt_value
 
     def _add_session_details(self, request, payload):
@@ -152,8 +149,8 @@ class JWTAuthentication(BaseAuthentication):
         except AttributeError:  # python 3.6
             items = payload.items()
         for k, v in items:
-            if k not in ('iat', 'exp'):
-                request.session['jwt_{}'.format(k)] = v
+            if k not in ("iat", "exp"):
+                request.session["jwt_{}".format(k)] = v
 
     def authenticate_header(self, _request):
         """
@@ -161,6 +158,5 @@ class JWTAuthentication(BaseAuthentication):
         header in a `401 Unauthenticated` response, or `None` if the
         authentication scheme should return `403 Permission Denied` responses.
         """
-        auth_header_prefix = getattr(settings, 'JWT_AUTH_HEADER_PREFIX', 'JWT')
-        return '{0} realm="{1}"'.format(auth_header_prefix,
-                                        self.www_authenticate_realm)
+        auth_header_prefix = getattr(settings, "JWT_AUTH_HEADER_PREFIX", "JWT")
+        return '{0} realm="{1}"'.format(auth_header_prefix, self.www_authenticate_realm)
