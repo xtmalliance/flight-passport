@@ -1,29 +1,30 @@
 version: "3"
-services:  
+services:
   db:
+    platform: linux/amd64
     image: postgres
     ports:
       - "5432:5432"
-    restart: unless-stopped        
+    restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data
     env_file:
       - ".env"
 
-  web:    
+  web:
+    platform: linux/amd64
     env_file:
-      - ".env"      
-    build: . 
+      - ".env"
+    build: .
     image: openskiessh/flight-passport
     command: ./entrypoint.sh
     ports:
-        - "9000:9000"
+      - "9000:9000"
     depends_on:
       - db
     volumes:
       - .:/app
-      
+
 volumes:
   app:
   db_data:
-  
