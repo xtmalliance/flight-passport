@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\Users\\hrish\\Miniconda3\\envs\\windev\\python.exe"
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

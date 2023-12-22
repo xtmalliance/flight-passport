@@ -2,21 +2,18 @@ from __future__ import unicode_literals
 
 import inspect
 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from six import add_metaclass
 
-from django.contrib.auth.models import Group, Permission
-from django.contrib.auth import get_user_model
-from django.contrib.contenttypes.models import ContentType
-
-from rolepermissions.utils import camelToSnake, camel_or_snake_to_title
 from rolepermissions.exceptions import RoleDoesNotExist
-
+from rolepermissions.utils import camel_or_snake_to_title, camelToSnake
 
 registered_roles = {}
 
 
 class RolesManager(object):
-
     def __iter__(cls):
         return iter(registered_roles)
 
@@ -35,7 +32,6 @@ class RolesManager(object):
 
 
 class RolesClassRegister(type):
-
     def __new__(cls, name, parents, dct):
         role_class = super(RolesClassRegister, cls).__new__(cls, name, parents, dct)
         if object not in parents:
@@ -45,10 +41,9 @@ class RolesClassRegister(type):
 
 @add_metaclass(RolesClassRegister)
 class AbstractUserRole(object):
-
     @classmethod
     def get_name(cls):
-        if hasattr(cls, 'role_name'):
+        if hasattr(cls, "role_name"):
             return cls.role_name
 
         return camelToSnake(cls.__name__)
@@ -133,8 +128,7 @@ class AbstractUserRole(object):
         new_adjusted_true_permissions = cls._get_adjusted_true_permissions(user)
 
         # Remove true permissions that were default granted only by the removed role
-        permissions_to_remove = (current_adjusted_true_permissions
-                                 .difference(new_adjusted_true_permissions))
+        permissions_to_remove = current_adjusted_true_permissions.difference(new_adjusted_true_permissions)
         for permission in permissions_to_remove:
             user.user_permissions.remove(permission)
 
@@ -142,15 +136,13 @@ class AbstractUserRole(object):
 
     @classmethod
     def permission_names_list(cls):
-        available_permissions = getattr(cls, 'available_permissions', {})
+        available_permissions = getattr(cls, "available_permissions", {})
         return available_permissions.keys()
 
     @classmethod
     def get_default_true_permissions(cls):
-        if hasattr(cls, 'available_permissions'):
-            permission_names = [
-                key for (key, default) in
-                cls.available_permissions.items() if default]
+        if hasattr(cls, "available_permissions"):
+            permission_names = [key for (key, default) in cls.available_permissions.items() if default]
 
             return cls.get_or_create_permissions(permission_names)
 
@@ -159,8 +151,7 @@ class AbstractUserRole(object):
     @classmethod
     def get_or_create_permissions(cls, permission_names):
         user_ct = ContentType.objects.get_for_model(get_user_model())
-        permissions = list(Permission.objects.filter(
-            content_type=user_ct, codename__in=permission_names).all())
+        permissions = list(Permission.objects.filter(content_type=user_ct, codename__in=permission_names).all())
 
         missing_permissions = set(permission_names) - set((p.codename for p in permissions))
         if len(missing_permissions) > 0:
@@ -188,8 +179,11 @@ def get_or_create_permission(codename, name=camel_or_snake_to_title):
                   argument and returns str
     """
     user_ct = ContentType.objects.get_for_model(get_user_model())
-    return Permission.objects.get_or_create(content_type=user_ct, codename=codename,
-                                            defaults={'name': name(codename) if callable(name) else name})
+    return Permission.objects.get_or_create(
+        content_type=user_ct,
+        codename=codename,
+        defaults={"name": name(codename) if callable(name) else name},
+    )
 
 
 def retrieve_role(role_name):
@@ -200,9 +194,9 @@ def retrieve_role(role_name):
 def get_user_roles(user):
     """Get a list of a users's roles."""
     if user:
-        groups = user.groups.all()   # Important! all() query may be cached on User with prefetch_related.
+        groups = user.groups.all()  # Important! all() query may be cached on User with prefetch_related.
         roles = (RolesManager.retrieve_role(group.name) for group in groups if group.name in RolesManager.get_roles_names())
-        return sorted(roles, key=lambda r: r.get_name() )
+        return sorted(roles, key=lambda r: r.get_name())
     else:
         return []
 

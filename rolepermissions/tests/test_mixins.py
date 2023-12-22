@@ -1,34 +1,32 @@
-
-from django.views.generic import DetailView
-from django.test import TestCase
 from django.contrib.auth import get_user_model
-from django.test.client import RequestFactory
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponse
+from django.test import TestCase
+from django.test.client import RequestFactory
 from django.test.utils import override_settings
-
+from django.views.generic import DetailView
 from model_mommy import mommy
 
-from rolepermissions.roles import RolesManager, AbstractUserRole
-from rolepermissions.mixins import HasRoleMixin, HasPermissionsMixin
+from rolepermissions.mixins import HasPermissionsMixin, HasRoleMixin
+from rolepermissions.roles import AbstractUserRole, RolesManager
 
 
 class MixRole1(AbstractUserRole):
     available_permissions = {
-        'permission1': True,
-        'permission2': True,
+        "permission1": True,
+        "permission2": True,
     }
 
 
 class MixRole2(AbstractUserRole):
     available_permissions = {
-        'permission3': True,
-        'permission4': False,
+        "permission3": True,
+        "permission4": False,
     }
 
 
 class HasRoleDetailView(HasRoleMixin, DetailView):
-    allowed_roles = ['mix_role1']
+    allowed_roles = ["mix_role1"]
 
     def get_object(self):
         return True
@@ -38,7 +36,7 @@ class HasRoleDetailView(HasRoleMixin, DetailView):
 
 
 class MultipleHasRoleDetailView(HasRoleMixin, DetailView):
-    allowed_roles = ['mix_role1', MixRole2]
+    allowed_roles = ["mix_role1", MixRole2]
 
     def get_object(self):
         return True
@@ -48,7 +46,7 @@ class MultipleHasRoleDetailView(HasRoleMixin, DetailView):
 
 
 class RoleOverhiddenRedirectView(HasRoleMixin, DetailView):
-    allowed_roles = ['mix_role1', MixRole2]
+    allowed_roles = ["mix_role1", MixRole2]
     redirect_to_login = False
 
     def get_object(self):
@@ -59,13 +57,12 @@ class RoleOverhiddenRedirectView(HasRoleMixin, DetailView):
 
 
 class HasRoleDecoratorTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
 
         self.factory = RequestFactory()
 
-        self.request = self.factory.get('/')
+        self.request = self.factory.get("/")
         self.request.session = {}
         self.request.user = self.user
 
@@ -105,8 +102,10 @@ class HasRoleDecoratorTests(TestCase):
         self.assertEquals(response.status_code, 200)
 
     @override_settings(
-        ROLEPERMISSIONS_REDIRECT_TO_LOGIN=True, LOGIN_URL='/login/',
-        ROOT_URLCONF='rolepermissions.tests.mock_urls')
+        ROLEPERMISSIONS_REDIRECT_TO_LOGIN=True,
+        LOGIN_URL="/login/",
+        ROOT_URLCONF="rolepermissions.tests.mock_urls",
+    )
     def test_overhidden_redirect_to_login(self):
         request = self.request
 
@@ -118,7 +117,7 @@ class HasRoleDecoratorTests(TestCase):
 
 
 class HasPermissionDetailView(HasPermissionsMixin, DetailView):
-    required_permission = 'permission2'
+    required_permission = "permission2"
 
     def get_object(self):
         return True
@@ -128,7 +127,7 @@ class HasPermissionDetailView(HasPermissionsMixin, DetailView):
 
 
 class PermissionOverhiddenRedirectView(HasPermissionsMixin, DetailView):
-    required_permission = 'permission2'
+    required_permission = "permission2"
     redirect_to_login = False
 
     def get_object(self):
@@ -139,13 +138,12 @@ class PermissionOverhiddenRedirectView(HasPermissionsMixin, DetailView):
 
 
 class HasPermissionDecoratorTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
 
         self.factory = RequestFactory()
 
-        self.request = self.factory.get('/')
+        self.request = self.factory.get("/")
         self.request.session = {}
         self.request.user = self.user
 
@@ -169,8 +167,10 @@ class HasPermissionDecoratorTests(TestCase):
             HasPermissionDetailView.as_view()(request)
 
     @override_settings(
-        ROLEPERMISSIONS_REDIRECT_TO_LOGIN=True, LOGIN_URL='/login/',
-        ROOT_URLCONF='rolepermissions.tests.mock_urls')
+        ROLEPERMISSIONS_REDIRECT_TO_LOGIN=True,
+        LOGIN_URL="/login/",
+        ROOT_URLCONF="rolepermissions.tests.mock_urls",
+    )
     def test_overhidden_redirect_to_login(self):
         request = self.request
 

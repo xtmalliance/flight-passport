@@ -1,61 +1,64 @@
-
-from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-
+from django.test import TestCase
 from model_mommy import mommy
 
-from rolepermissions.roles import RolesManager, AbstractUserRole
-from rolepermissions.roles import (
-    get_user_roles, retrieve_role,
-    assign_role, remove_role, clear_roles
-)
-from rolepermissions.permissions import (
-    grant_permission, revoke_permission,
-    available_perm_status, available_perm_names)
 from rolepermissions.checkers import has_permission
-from rolepermissions.exceptions import (
-    RoleDoesNotExist, RolePermissionScopeException)
+from rolepermissions.exceptions import RoleDoesNotExist, RolePermissionScopeException
+from rolepermissions.permissions import (
+    available_perm_names,
+    available_perm_status,
+    grant_permission,
+    revoke_permission,
+)
+from rolepermissions.roles import (
+    AbstractUserRole,
+    RolesManager,
+    assign_role,
+    clear_roles,
+    get_user_roles,
+    remove_role,
+    retrieve_role,
+)
 
 
 class ShoRole1(AbstractUserRole):
     available_permissions = {
-        'permission1': True,
-        'permission2': True,
+        "permission1": True,
+        "permission2": True,
     }
 
 
 class ShoRole2(AbstractUserRole):
     available_permissions = {
-        'permission3': True,
-        'permission4': False,
+        "permission3": True,
+        "permission4": False,
     }
 
 
 class ShoRole3(AbstractUserRole):
-    role_name = 'sho_new_name'
+    role_name = "sho_new_name"
     available_permissions = {
-        'permission5': False,
-        'permission6': False,
+        "permission5": False,
+        "permission6": False,
     }
 
 
 class ShoRole4(AbstractUserRole):
     available_permissions = {
-        'permission1': False,
-        'permission3': False,
+        "permission1": False,
+        "permission3": False,
     }
 
 
 class AssignRoleTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
 
     def test_assign_role(self):
         user = self.user
 
-        assign_role(user, 'sho_role1')
+        assign_role(user, "sho_role1")
 
         self.assertListEqual([ShoRole1], get_user_roles(user))
 
@@ -70,7 +73,7 @@ class AssignRoleTests(TestCase):
         user = self.user
 
         with self.assertRaises(RoleDoesNotExist):
-            assign_role(user, 'no role')
+            assign_role(user, "no role")
 
     def test_assign_multiple_roles(self):
         user = self.user
@@ -128,7 +131,7 @@ class RemoveRoleTests(TestCase):
 
     def test_remove_invalid_role(self):
         with self.assertRaises(RoleDoesNotExist):
-            assign_role(self.user, 'no role')
+            assign_role(self.user, "no role")
 
     def test_remove_role_reinstates_permissions_correctly_scenario_1(self):
         """
@@ -364,7 +367,6 @@ class RemoveRoleTests(TestCase):
 
 
 class ClearRolesTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
 
@@ -381,11 +383,10 @@ class ClearRolesTests(TestCase):
 
 
 class GetUserRoleTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
 
-    def test_returns_list(self) :
+    def test_returns_list(self):
         user = self.user
 
         user_roles = get_user_roles(user)
@@ -454,7 +455,7 @@ class GetUserRoleTests(TestCase):
         assign_role(user, ShoRole2)
         assign_role(user, ShoRole3)
 
-        fetched_user = get_user_model().objects.prefetch_related('groups').get(pk=self.user.pk)
+        fetched_user = get_user_model().objects.prefetch_related("groups").get(pk=self.user.pk)
         N = 3
         with self.assertNumQueries(0):  # all data required is cached with fetched_user
             for i in range(N):
@@ -465,7 +466,6 @@ class GetUserRoleTests(TestCase):
 
 
 class AvailablePermStatusTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
         self.user_role = ShoRole2.assign_role_to_user(self.user)
@@ -473,8 +473,8 @@ class AvailablePermStatusTests(TestCase):
     def test_permission_hash(self):
         perm_hash = available_perm_status(self.user)
 
-        self.assertTrue(perm_hash['permission3'])
-        self.assertFalse(perm_hash['permission4'])
+        self.assertTrue(perm_hash["permission3"])
+        self.assertFalse(perm_hash["permission4"])
 
     def test_permission_hash_multiple_groups(self):
         """
@@ -486,27 +486,26 @@ class AvailablePermStatusTests(TestCase):
 
         perm_hash = available_perm_status(self.user)
 
-        self.assertTrue(perm_hash['permission1'])
-        self.assertTrue(perm_hash['permission2'])
-        self.assertTrue(perm_hash['permission3'])
-        self.assertFalse(perm_hash['permission4'])
+        self.assertTrue(perm_hash["permission1"])
+        self.assertTrue(perm_hash["permission2"])
+        self.assertTrue(perm_hash["permission3"])
+        self.assertFalse(perm_hash["permission4"])
 
     def test_permission_hash_after_modification(self):
-        revoke_permission(self.user, 'permission3')
+        revoke_permission(self.user, "permission3")
 
         perm_hash = available_perm_status(self.user)
 
-        self.assertFalse(perm_hash['permission3'])
-        self.assertFalse(perm_hash['permission4'])
+        self.assertFalse(perm_hash["permission3"])
+        self.assertFalse(perm_hash["permission4"])
 
 
 class AvailablePermNamesTests(TestCase):
-
     def assert_available_perm_names_equals_available_perm_status(self):
         perm_hash = available_perm_status(self.user)
         perm_names = available_perm_names(self.user)
 
-        self.assertEqual( set(perm_names), set(p for p, has_perm in perm_hash.items() if has_perm) )
+        self.assertEqual(set(perm_names), set(p for p, has_perm in perm_hash.items() if has_perm))
 
     def setUp(self):
         self.user = mommy.make(get_user_model())
@@ -526,7 +525,7 @@ class AvailablePermNamesTests(TestCase):
         self.assert_available_perm_names_equals_available_perm_status()
 
     def test_permission_names_after_modification(self):
-        revoke_permission(self.user, 'permission3')
+        revoke_permission(self.user, "permission3")
 
         self.assert_available_perm_names_equals_available_perm_status()
 
@@ -538,7 +537,7 @@ class AvailablePermNamesTests(TestCase):
                 perm_names = available_perm_names(fetched_user)
 
     def test_queries_with_prefetch(self):
-        fetched_user = get_user_model().objects.prefetch_related('groups', 'user_permissions').get(pk=self.user.pk)
+        fetched_user = get_user_model().objects.prefetch_related("groups", "user_permissions").get(pk=self.user.pk)
         N = 3
         with self.assertNumQueries(0):  # all data required is cached with fetched_user
             for i in range(N):
@@ -546,7 +545,6 @@ class AvailablePermNamesTests(TestCase):
 
 
 class GrantPermissionTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
         self.user_role = ShoRole2.assign_role_to_user(self.user)
@@ -554,33 +552,32 @@ class GrantPermissionTests(TestCase):
     def test_grant_permission(self):
         user = self.user
 
-        grant_permission(user, 'permission4')
+        grant_permission(user, "permission4")
 
-        self.assertTrue(has_permission(user, 'permission4'))
+        self.assertTrue(has_permission(user, "permission4"))
 
     def test_grat_granted_permission(self):
         user = self.user
 
-        grant_permission(user, 'permission3')
+        grant_permission(user, "permission3")
 
-        self.assertTrue(has_permission(user, 'permission3'))
+        self.assertTrue(has_permission(user, "permission3"))
 
     def test_not_allowed_permission(self):
         user = self.user
 
         with self.assertRaises(RolePermissionScopeException):
-            grant_permission(user, 'permission1')
+            grant_permission(user, "permission1")
 
     def test_not_allowed_permission_multiple_roles(self):
         user = self.user
         ShoRole3.assign_role_to_user(self.user)
 
         with self.assertRaises(RolePermissionScopeException):
-            grant_permission(user, 'permission1')
+            grant_permission(user, "permission1")
 
 
 class RevokePermissionTests(TestCase):
-
     def setUp(self):
         self.user = mommy.make(get_user_model())
         self.user_role = ShoRole2.assign_role_to_user(self.user)
@@ -588,45 +585,44 @@ class RevokePermissionTests(TestCase):
     def test_revoke_permission(self):
         user = self.user
 
-        revoke_permission(user, 'permission3')
+        revoke_permission(user, "permission3")
 
-        self.assertFalse(has_permission(user, 'permission3'))
+        self.assertFalse(has_permission(user, "permission3"))
 
     def test_revoke_revoked_permission(self):
         user = self.user
 
-        revoke_permission(user, 'permission4')
+        revoke_permission(user, "permission4")
 
-        self.assertFalse(has_permission(user, 'permission4'))
+        self.assertFalse(has_permission(user, "permission4"))
 
     def test_not_allowed_permission(self):
         user = self.user
 
         with self.assertRaises(RolePermissionScopeException):
-            revoke_permission(user, 'permission1')
+            revoke_permission(user, "permission1")
 
     def test_not_allowed_permission_multiple_roles(self):
         user = self.user
         ShoRole3.assign_role_to_user(self.user)
 
         with self.assertRaises(RolePermissionScopeException):
-            revoke_permission(user, 'permission1')
+            revoke_permission(user, "permission1")
 
 
 class RetrieveRole(TestCase):
-
     def setUp(self):
         pass
 
     def test_retrive_role1(self):
-        self.assertEquals(retrieve_role('sho_role1'), ShoRole1)
+        self.assertEquals(retrieve_role("sho_role1"), ShoRole1)
 
     def test_retrive_role2(self):
-        self.assertEquals(retrieve_role('sho_role2'), ShoRole2)
+        self.assertEquals(retrieve_role("sho_role2"), ShoRole2)
 
     def test_retrive_role3(self):
-        self.assertEquals(retrieve_role('sho_new_name'), ShoRole3)
+        self.assertEquals(retrieve_role("sho_new_name"), ShoRole3)
 
     def test_retrieve_unknowun_role(self):
-        role = retrieve_role('unknowun_role')
+        role = retrieve_role("unknowun_role")
         self.assertIsNone(role)
