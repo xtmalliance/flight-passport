@@ -128,7 +128,7 @@ APPLICATION_NAME = "Openskies Flight Passport"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
-if DEBUG:
+if not DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 EMAIL_HOST = os.environ.get("ESP_EMAIL_HOST", "__smtp.youresp.com__")
