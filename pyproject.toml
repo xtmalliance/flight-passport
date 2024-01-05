@@ -1,11 +1,10 @@
 [tool.black]
 line-length = 150
 target-version = ['py310']
-exclude = '''
+force-exclude = '''
 /(
   | migrations
 )/
-
 '''
 
 [tool.isort]
@@ -16,3 +15,8 @@ skip = "migrations"
 line-length = 150
 target-version = "py310"
 exclude = ["migrations"]
+
+[tool.codespell]
+skip = "./static/**"
+ignore-words = ".codespellignore"
+quiet-level = 2

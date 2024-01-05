@@ -11,7 +11,7 @@
 
 <form class="signup form-group" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
-  
+
   {% if form.errors %}
       {% for field in form %}
           {% for error in field.errors %}
@@ -31,9 +31,9 @@
     {{ hidden_field.errors }}
     {{ hidden_field }}
   {% endfor %}
-  
+
   <table class="table">
-    {% for field in form.visible_fields %}      
+    {% for field in form.visible_fields %}
           <label class="form-label">{{ field.label_tag }}</label>
           {{ field.errors }}
           {{ field }}

@@ -55,14 +55,14 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   {% endfor %}
   <table class="table">
     {% for field in form.visible_fields %}
-      
+
         <label class="form-label">{{ field.label_tag }}</label>
-        
+
           {{ field.errors }}
           {{ field }}
           {{ field.help_text }}
-        
-      
+
+
     {% endfor %}
   </table>
   <br>

@@ -4,24 +4,24 @@
 
 {% block content %}
 
-<div class="columns">    
+<div class="columns">
     <!-- LEFT COLUMN -->
     <div class="column col-4 col-sm-12 float-right bg-dark text-light titlecol" style="padding-top: 10%; padding-left: 2em; padding-right: 2em;";>
         <div class="divider" style="padding-top: 1em;"></div>
         <!-- <h1 class="">{{domain_name}}</h1>  -->
         <h4>Openskies Flight Passport</h4>
-        
+
     </div><!-- .column .col-4 .col-sm-12 -->
 
     <!-- RIGHT COLUMN-CLIENT AREA -->
-    <div class="column col-8 col-sm-12 float-left"  style="padding-top: 10%; padding-left: 2em;">	
-        <img class="logo" src="{{logo_url}}">	
+    <div class="column col-8 col-sm-12 float-left"  style="padding-top: 10%; padding-left: 2em;">
+        <img class="logo" src="{{logo_url}}">
         <h4>&nbsp;</h4>
         <h5>Welcome <em>{{ user.username}}</em></h4>
         <br />
-  
+
         <p>Here are your user email: <span>{{email}}</span></p>
-  
+
     </div><!-- .column .col-8 .col-sm-12 -->
 
 </div><!-- .columns -->

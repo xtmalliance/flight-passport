@@ -29,7 +29,7 @@
 			"response": []
 		},
 		{
-			"name": "Aerobridge Filght Permission Signing",
+			"name": "Aerobridge Flight Permission Signing",
 			"request": {
 				"auth": {
 					"type": "noauth"
