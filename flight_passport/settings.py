@@ -65,7 +65,14 @@ INSTALLED_APPS = [
     "vault",
     "allauth.account",
     "allauth.socialaccount",
+    "anymail"
 ]
+
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILERSEND_API_TOKEN": os.environ.get("ESP_API_KEY", "000000"),  # Email service provider API Key
+    "MAILERSEND_SENDER_DOMAIN": 'id.openskies.sh'  # your MailerSend domain, if needed
+}
 SITE_ID = 1
 
 
@@ -128,12 +135,11 @@ APPLICATION_NAME = "Openskies Flight Passport"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
-if not DEBUG:
+if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-EMAIL_HOST = os.environ.get("ESP_EMAIL_HOST", "__smtp.youresp.com__")
-EMAIL_HOST_USER = os.environ.get("ESP_USER_NAME", "000000")  # Email service provider user name
-EMAIL_HOST_PASSWORD = os.environ.get("ESP_API_KEY", "000000")  # Email service provider API Key
+else: 
+    EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"  
+    
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
