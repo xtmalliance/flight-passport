@@ -11,29 +11,29 @@
     {% endblock %}
   </head>
   <body>
-    
+
     {% block body %}
-        
+
     <div class="column col-4 col-mx-auto">
       <br>
       <div class="flex-centered">
-      
+
       <img class="logo" src="{{logo_url}}">
       </div>
       <div class="flex-centered">
       <p class="application-name">{{application_name}}</p>
       </div>
       <div class="divider text-center" data-content=""></div>
-      
+
       <br>
-      
+
     </div>
 
     {% if messages %}
       <div class="column col-4 col-mx-auto">
         <br>
         <div class="flex-centered">
-        
+
 
         <strong>Messages:</strong>
         <ul>
@@ -45,7 +45,7 @@
     </div>
     {% endif %}
 
-    <div class="container">    
+    <div class="container">
       <div class="columns">
         <div class="column col-4 col-mx-auto">
         {% block content %}
