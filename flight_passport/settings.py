@@ -36,7 +36,7 @@ if int(debug_mode):
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", ['*'])
+ALLOWED_HOSTS = ["*"]
 
 issuer_domain = os.environ.get("JWT_ISSUER_DOMAIN", None)
 if issuer_domain:
