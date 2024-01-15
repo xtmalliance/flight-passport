@@ -6,3 +6,5 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 RUN rm -rf __pycache__
 COPY . /app/
+
+RUN /app/setup-django-run-as-non-root.sh
