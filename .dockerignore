@@ -2,8 +2,13 @@
 .dockerignore
 *.log
 local_settings.py
+*.sqlite3
 db.sqlite3
 db.sqlite3-journal
 static/*
 
 .env*
+*.env
+
+*.pyc
+__pycache__
