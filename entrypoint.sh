@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo Waiting for DBs...
-if ! wait-for-it --service db:5432; then
+if ! wait-for-it --service db-passport:5432; then
     exit
 fi
 
