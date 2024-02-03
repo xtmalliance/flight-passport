@@ -1,6 +1,6 @@
 version: "3"
 services:
-  db:
+  db-passport:
     platform: linux/amd64
     image: postgres
     ports:
@@ -21,7 +21,7 @@ services:
     ports:
       - "9000:9000"
     depends_on:
-      - db
+      - db-passport
     volumes:
       - .:/app
 
