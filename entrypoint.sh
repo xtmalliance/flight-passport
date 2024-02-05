@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo Waiting for DBs...
+if ! wait-for-it --service db-passport:5432; then
+    exit
+fi
+
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate --noinput

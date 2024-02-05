@@ -136,7 +136,7 @@ class JWTAuthentication(BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
 
         jwt_value = auth[1]
-        if type(jwt_value) is bytes:
+        if isinstance(jwt_value, bytes):
             jwt_value = jwt_value.decode("utf-8")
         return jwt_value
 

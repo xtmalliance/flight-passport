@@ -65,13 +65,13 @@ INSTALLED_APPS = [
     "vault",
     "allauth.account",
     "allauth.socialaccount",
-    "anymail"
+    "anymail",
 ]
 
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
     "MAILERSEND_API_TOKEN": os.environ.get("ESP_API_KEY", "000000"),  # Email service provider API Key
-    "MAILERSEND_SENDER_DOMAIN": 'id.openskies.sh'  # your MailerSend domain, if needed
+    "MAILERSEND_SENDER_DOMAIN": "id.openskies.sh",  # your MailerSend domain, if needed
 }
 SITE_ID = 1
 
@@ -137,9 +137,9 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-else: 
-    EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"  
-    
+else:
+    EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
+
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -230,7 +230,7 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {}
-USING_DOCKER_COMPOSE = os.environ.get("USING_DOCKER_COMPOSE", 0)
+USING_DOCKER_COMPOSE = int(os.environ.get("USING_DOCKER_COMPOSE", 0))
 if USING_DOCKER_COMPOSE:
     DATABASES = {
         "default": {
