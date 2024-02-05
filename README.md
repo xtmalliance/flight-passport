@@ -17,6 +17,9 @@ The upcoming standards being developed at ASTM, EuroCAE etc. on drones use JWT /
 
 While there are many authentication and identity providers that support OAuth 2.0 and OpenID / OpenID Connect Credentials, all of them have some limitations in the context of U-Space / UTM. As of February 2020, OAuth 2.0 and JavaScript Web Token (JWTs) as a way to authenticate and issue credentials are parts of upcoming UTM / U-Space standards (e.g. DSS). Commercial service providers may or may not suffice for all cases, therefore this project is developed to enable maximum flexibility and still issue secure JWT tokens. This project can be deployed on any cloud service provider (national or international) and can be customized in any way to suit local UTM / U-Space needs.
 
+## Running locally / Deployment
+Refer to the (deployment)[https://github.com/openutm/deployment] repository to see how you can deploy this server along with instructions and sample environment file. 
+
 ## Technical Details
 
 Flight Passport is a OAuth Provider that runs on Django and the fantastic [Authlib](https://authlib.org/) library and [Django OAuth Toolkit](https://github.com/jazzband/django-oauth-toolkit).
@@ -25,27 +28,27 @@ Flight Passport is a OAuth Provider that runs on Django and the fantastic [Authl
 
 This is a Django project that uses Django and other opensource libraries.
 
-### 1. Install Dependencies
+### 1. Create a .env file
+
+Download the `.passport.env.example` to `.env` and fill in appropriately. Create new key, follow instructions [here](https://github.com/openutm/deployment/blob/main/constructing_environment_files.md) for example.
+
+### 2. Install Dependencies
 
 Python 3 is required for this and install dependencies using `pip install -r requirements.txt`.
 
-### 2. Create Initial Database
+### 3. Create Initial Database
 
 Use `python manage.py migrate` to create the initial database tables locally. It will use the default SQLLite.
 
-### 3. Create a Django administrator
+### 4. Create a Django administrator
 
 Use `python manage.py createsuperuser` to create a administrator.
 
-### 4. Create a .env file
-
-Rename the `.env.example` to `.env` and fill in appropriately. Create new key, follow instructions [here](https://django-oauth-toolkit.readthedocs.io/en/latest/oidc.html#creating-rsa-private-key) for example.
-
-### 6. Set site name and domain
+### 5. Set site name and domain
 
 Run  `python manage.py initialize_db`
 
-### 5. Start Server
+### 6. Start Server
 
 Run  `python manage.py runserver`
 
