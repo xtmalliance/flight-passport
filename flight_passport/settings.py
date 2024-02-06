@@ -70,8 +70,8 @@ INSTALLED_APPS = [
 
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
-    "MAILERSEND_API_TOKEN": os.environ.get("ESP_API_KEY", "000000"),  # Email service provider API Key
-    "MAILERSEND_SENDER_DOMAIN": "id.openskies.sh",  # your MailerSend domain, if needed
+    "MAILERSEND_API_TOKEN": os.environ.get("MAILERSEND_API_TOKEN", "000000"),  # Email service provider API Key    
+    "RESEND_API_KEY": os.environ.get("RESEND_API_KEY", "000000"),
 }
 SITE_ID = 1
 
@@ -138,7 +138,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
+    EMAIL_BACKEND = os.environ.get("ESP_EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
