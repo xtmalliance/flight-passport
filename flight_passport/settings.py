@@ -70,7 +70,7 @@ INSTALLED_APPS = [
 
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
-    "MAILERSEND_API_TOKEN": os.environ.get("MAILERSEND_API_TOKEN", "000000"),  # Email service provider API Key    
+    "MAILERSEND_API_TOKEN": os.environ.get("MAILERSEND_API_TOKEN", "000000"),  # Email service provider API Key
     "RESEND_API_KEY": os.environ.get("RESEND_API_KEY", "000000"),
 }
 SITE_ID = 1

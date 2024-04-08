@@ -1,5 +1,4 @@
 # from .settings import oauth2_settings
-from django.conf import settings
 
 
 class BaseScopes(object):

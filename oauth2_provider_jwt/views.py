@@ -75,7 +75,7 @@ class TokenView(views.TokenView):
             all_audience = [audience.identifier for audience in audience_query]
             try:
                 assert requested_audience in all_audience
-            except AssertionError as ae:
+            except AssertionError:
                 raise IncorrectAudience()
             else:
                 extra_data["aud"] = requested_audience
@@ -101,7 +101,7 @@ class TokenView(views.TokenView):
                 id_value = getattr(token_user, id_attribute, None)
                 if not id_value:
                     raise MissingIdAttribute()
-            except AssertionError as ae:
+            except AssertionError:
                 id_value = token.application.client_id + "@clients"
 
             extra_data["sub"] = str(id_value)
@@ -136,7 +136,7 @@ class TokenView(views.TokenView):
         response = super(TokenView, self).post(request, *args, **kwargs)
 
         content = ast.literal_eval(response.content.decode("utf-8"))
-        request_grant_type = request.POST.get("grant_type")
+        request.POST.get("grant_type")
         # Per the ASTM standards on UTM only the 'client_credentails' grant must be a JWT
         if response.status_code == 200 and "access_token" in content:
             if not TokenView._is_jwt_config_set():

@@ -20,8 +20,8 @@ class PassportAccountAdapter(DefaultAccountAdapter):
 
         if domain in white_listed_domain:
             ext = tldextract.extract(domain)
-            tld = ext.domain.upper()
-            suffix = ext.suffix.upper()
+            ext.domain.upper()
+            ext.suffix.upper()
             return email
         else:
             raise ValidationError("You are restricted from registering. Please contact admin.")

@@ -64,7 +64,7 @@ def decode_jwt(jwt_value):
         raise jwt.InvalidTokenError()
 
     payload_enc += "=" * (-len(payload_enc) % 4)  # add padding
-    payload = json.loads(base64.b64decode(payload_enc).decode("utf-8"))
+    json.loads(base64.b64decode(payload_enc).decode("utf-8"))
 
     algorithms = getattr(settings, "JWT_JWS_ALGORITHMS", ["HS256", "RS256"])
     if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
