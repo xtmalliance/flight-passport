@@ -88,6 +88,7 @@ MIDDLEWARE = (
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "csp.middleware.CSPMiddleware",
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -241,50 +242,27 @@ if USING_DOCKER_COMPOSE:
 else:
     DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         }
-#     },
-#     'formatters': {
-#         'verbose': {
-#         'format': '%(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)d: %(message)s'
-#         },
-#         'simple': {
-#             'format': '%(levelname)s %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'filters': ['require_debug_true'],
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'verbose'
-#         }
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'level': 'INFO',
-#             'handlers': ['console'],
-#         },
-#         'oauth2_provider': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#         },
-#         'oauthlib': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#         },
-#         'myapp': {
-#             'level': 'INFO',
-#             'handlers': ['console'],
-#         },
-#         'oauth': {
-#             'level': 'DEBUG',
-#             'handlers': ['console'],
-#         },
-#     }
-# }
+
+# Enable HTTP Strict-Transport-Security (HSTS) to force clients to always use secure connections
+
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Enable browser XSS filtering
+SECURE_CONTENT_SECURITY_POLICY = "default-src 'self'; script-src 'none'"
+
+# Enable X-Content-Type-Options nosniff
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable Referrer-Policy
+CSP_DEFAULT_SRC = ("'self'",)
+
+# Enable HTTP Strict-Transport-Security (HSTS) to force clients to always use secure connections
+
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Enable browser XSS filtering
+SECURE_CONTENT_SECURITY_POLICY = "default-src 'self'; script-src 'none'"
