@@ -217,6 +217,7 @@ OAUTH2_PROVIDER = {
     "ACCESS_TOKEN_EXPIRE_SECONDS": 3600,
     "REFRESH_TOKEN_EXPIRE_SECONDS": 3600,
     "ID_TOKEN_EXPIRE_SECONDS": 3600,
+    "OIDC_ISS_ENDPOINT": os.environ.get("JWT_ISSUER_DOMAIN", ""),
 }
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
