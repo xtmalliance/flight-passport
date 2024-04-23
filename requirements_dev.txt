@@ -1,0 +1,11 @@
+-r requirements.txt
+pytest==8.1.1
+pytest-django==4.5.2
+pytest-cov==5.0.0
+pylint_django
+black
+isort
+ruff
+bandit
+pre-commit
+codespell

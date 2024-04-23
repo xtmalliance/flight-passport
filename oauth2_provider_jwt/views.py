@@ -2,12 +2,8 @@ import ast
 import json
 import logging
 
-try:
-    from urllib.parse import parse_qs, urlencode, urlparse
-except ImportError:
-    from urllib import urlencode  # noqa
-    from urlparse import urlparse, parse_qs
-
+from urllib.parse import parse_qs, urlparse
+from django.http import HttpResponse
 from django.conf import settings
 from django.utils.module_loading import import_string
 from jwcrypto import jwk
@@ -15,7 +11,7 @@ from oauth2_provider import views
 from oauth2_provider.http import OAuth2ResponseRedirect
 from oauth2_provider.models import get_access_token_model
 from oauth2_provider.settings import oauth2_settings
-
+from rest_framework import status
 from .utils import encode_jwt, generate_payload
 
 # Create your views here.
@@ -132,13 +128,13 @@ class TokenView(views.TokenView):
         else:
             return False
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> HttpResponse:
         response = super(TokenView, self).post(request, *args, **kwargs)
 
         content = ast.literal_eval(response.content.decode("utf-8"))
         request.POST.get("grant_type")
-        # Per the ASTM standards on UTM only the 'client_credentails' grant must be a JWT
-        if response.status_code == 200 and "access_token" in content:
+        # Per the ASTM standards on UTM only the 'client_credentials' grant must be a JWT
+        if response.status_code == status.HTTP_200_OK and "access_token" in content:
             if not TokenView._is_jwt_config_set():
                 logger.warning("Missing JWT configuration, skipping token build")
             else:
@@ -149,7 +145,7 @@ class TokenView(views.TokenView):
                     content["access_token"] = token_raw
 
                 except MissingIdAttribute:
-                    response.status_code = 400
+                    response.status_code = status.HTTP_400_BAD_REQUEST
                     response.content = json.dumps(
                         {
                             "error": "invalid_request",
@@ -158,7 +154,7 @@ class TokenView(views.TokenView):
                     )
 
                 except IncorrectAudience:
-                    response.status_code = 400
+                    response.status_code = status.HTTP_400_BAD_REQUEST
                     response.content = json.dumps(
                         {
                             "error": "invalid_request",

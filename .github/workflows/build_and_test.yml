@@ -1,0 +1,61 @@
+name: Build the containers and run Linting, Testing.
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Ruff code analysis
+        uses: chartboost/ruff-action@v1
+
+      - name: Run Black formatting
+        uses: psf/black@stable
+
+      - name: Run Codespell spell checker
+        uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_file: .codespellignore
+
+  build-and-testing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: 'Create an env file from secrets'
+      run: |
+        touch .env
+        echo "${{ secrets.ENV_FILE }}" > .env
+    - name: Build the docker container
+      run: |
+        docker-compose build
+    - name: Up the docker container
+      run: |
+        docker-compose up -d
+    - name: List running containers
+      run: |
+        docker ps --format '{{.Names}}'
+    - name: Run unit tests on the container
+      run: |
+        docker exec -u root -i flight_passport_web_1 python -m pip install -r requirements_dev.txt
+        docker exec -u root -i flight_passport_web_1 pytest
+
+    - name: Shut down the docker container
+      run: |
+        docker-compose down
