@@ -12,8 +12,8 @@ RUN pip install -U pip && pip install -r requirements.txt
 RUN addgroup --gid 10000 django  && adduser --shell /bin/bash --disabled-password --gecos "" --uid 10000 --ingroup django django
 RUN chown -R django:django /app
 USER django:django
-ENV PATH="/home/django/.local/bin:${PATH}"
 
 COPY --chown=django:django . .
 
+ENV PATH="/home/django/.local/bin:${PATH}"
 EXPOSE 9000
