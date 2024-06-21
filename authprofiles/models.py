@@ -43,10 +43,7 @@ class PassportApplication(AbstractApplication):
     APPLICATION_CLASS_CHOICES = (
         (0, _("Other")),
         (1, _("Login only")),
-        (2, _("Flight Spotlight Read - Write")),
-        (3, _("Flight Blender Read - Write")),
-        (4, _("Aerobridge Read and Write")),
-        (5, _("Permission Signing Client")),
+        (2, _("Client Credentials")),
     )
     client_class = models.IntegerField(choices=APPLICATION_CLASS_CHOICES, default=0)
     audience = models.ManyToManyField(PassportAPI, related_name="application_audience", blank=True)
